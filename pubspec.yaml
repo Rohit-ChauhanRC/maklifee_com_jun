@@ -1,0 +1,45 @@
+name: maklifee_com
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment:
+  sdk: ">=3.2.2 <4.0.0"
+
+dependencies:
+  cupertino_icons: ^1.0.2
+  get: 4.6.6
+  http: ^1.2.0
+  dropdown_textfield: ^1.0.8
+  datetime_picker_formfield_new: ^2.1.0
+  get_storage: ^2.1.1
+  flutter_screenutil: ^5.9.0
+  upgrader: ^9.0.0
+
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_lints: ^2.0.0
+  flutter_launcher_icons: ^0.13.1
+
+  flutter_test:
+    sdk: flutter
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  # adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/images/logo.png"
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+
+  fonts:
+    - family: Nunito
+      fonts:
+        - asset: assets/fonts/Nunito/static/Nunito-Regular.ttf
