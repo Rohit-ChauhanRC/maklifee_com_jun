@@ -55,17 +55,17 @@ class AppTheme {
           background: AppColors.white,
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.appColor,
-          titleTextStyle: const TextStyle(
-            color: AppColors.white,
-            fontFamily: "Kalnia_Expanded-Bold",
-            fontWeight: FontWeight.bold,
-            fontSize: AppDimens.font20,
-          ),
-          actionsIconTheme: const IconThemeData(
-            color: AppColors.purple_200,
-          ),
-        ),
+            backgroundColor: AppColors.appColor,
+            titleTextStyle: const TextStyle(
+              color: AppColors.white,
+              fontFamily: "Kalnia_Expanded-Bold",
+              fontWeight: FontWeight.bold,
+              fontSize: AppDimens.font20,
+            ),
+            actionsIconTheme: const IconThemeData(
+              color: AppColors.white,
+            ),
+            iconTheme: const IconThemeData(color: AppColors.white)),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ElevatedButton.styleFrom(
             minimumSize: Size(150.w, 35.h),

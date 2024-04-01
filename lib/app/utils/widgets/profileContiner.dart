@@ -17,7 +17,7 @@ class ProfileContiner extends StatelessWidget {
         borderRadius: BorderRadius.circular(30),
       ),
       margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.all(10),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 20),
       child: Column(
         children: [
           Row(
