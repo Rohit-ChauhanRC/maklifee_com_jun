@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../routes/app_pages.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/widgets/custom_button.dart';
 import '../../../utils/widgets/text_form_widget.dart';
@@ -107,7 +108,7 @@ class OtpView extends GetView<OtpController> {
               ),
               CustomButton(
                 onPressed: () {
-                  // Get.toNamed(Routes.OTP);
+                  Get.toNamed(Routes.HOME);
                 },
                 title: "Verify",
               ),

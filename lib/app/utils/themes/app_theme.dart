@@ -55,12 +55,12 @@ class AppTheme {
           background: AppColors.white,
         ),
         appBarTheme: AppBarTheme(
-          backgroundColor: AppColors.blueDark,
-          titleTextStyle: TextStyle(
-            color: AppColors.blueLight,
+          backgroundColor: AppColors.appColor,
+          titleTextStyle: const TextStyle(
+            color: AppColors.white,
             fontFamily: "Kalnia_Expanded-Bold",
             fontWeight: FontWeight.bold,
-            fontSize: AppDimens.font18,
+            fontSize: AppDimens.font20,
           ),
           actionsIconTheme: const IconThemeData(
             color: AppColors.purple_200,

@@ -1,9 +1,15 @@
 import 'package:get/get.dart';
 
 class HomeController extends GetxController {
-  //TODO: Implement HomeController
+  //
+  final RxBool _circularProgress = true.obs;
+  bool get circularProgress => _circularProgress.value;
+  set circularProgress(bool v) => _circularProgress.value = v;
 
-  final count = 0.obs;
+  final RxString _mobileNumber = ''.obs;
+  String get mobileNumber => _mobileNumber.value;
+  set mobileNumber(String mob) => _mobileNumber.value = mob;
+
   @override
   void onInit() {
     super.onInit();
@@ -18,6 +24,4 @@ class HomeController extends GetxController {
   void onClose() {
     super.onClose();
   }
-
-  void increment() => count.value++;
 }
