@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:maklifee_com/app/modules/home/controllers/home_controller.dart';
 
 import '../app_colors/app_colors.dart';
 
 class ProfileContiner extends StatelessWidget {
-  const ProfileContiner({super.key});
+  const ProfileContiner({
+    super.key,
+    required this.controller,
+  });
+  final HomeController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +39,10 @@ class ProfileContiner extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              Text(
-                "Pulkit",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              Obx(() => Text(
+                    controller.name.replaceAll('"', "") ?? "Test",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )),
             ],
           ),
           const SizedBox(
@@ -54,10 +60,10 @@ class ProfileContiner extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              Text(
-                "10001",
-                style: Theme.of(context).textTheme.bodySmall,
-              ),
+              Obx(() => Text(
+                    controller.userId ?? "00",
+                    style: Theme.of(context).textTheme.bodySmall,
+                  )),
             ],
           ),
         ],

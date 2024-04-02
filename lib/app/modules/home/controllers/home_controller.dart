@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 class HomeController extends GetxController {
   //
@@ -6,13 +7,23 @@ class HomeController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
-  final RxString _mobileNumber = ''.obs;
-  String get mobileNumber => _mobileNumber.value;
-  set mobileNumber(String mob) => _mobileNumber.value = mob;
+  final RxString _name = ''.obs;
+  String get name => _name.value;
+  set name(String mob) => _name.value = mob;
+
+  final RxString _userId = ''.obs;
+  String get userId => _userId.value;
+  set userId(String mob) => _userId.value = mob;
+
+  final RxString _userType = ''.obs;
+  String get userType => _userType.value;
+  set userType(String str) => _userType.value = str;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await fetchUserData();
+    userType = Get.arguments[0];
   }
 
   @override
@@ -23,5 +34,33 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      print("object");
+      var res = await http.post(
+        Uri.parse(
+          "http://Payment.maklife.in:98/api/CustomerId",
+        ),
+        body: {
+          "MobileNo": Get.arguments[1].trim(),
+          "UserType": Get.arguments[0] == "Outlet" ? "O" : "F"
+        },
+      );
+      if (res.statusCode == 200) {
+        print(Get.arguments[1].trim());
+        print(Get.arguments[0].trim());
+        print(res.statusCode);
+        print(res.body);
+        userId = res.body.substring(1, 9);
+        name = res.body.substring(9);
+        userType = Get.arguments[0];
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
+    }
   }
 }

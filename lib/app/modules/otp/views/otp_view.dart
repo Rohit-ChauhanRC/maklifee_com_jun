@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -53,13 +54,13 @@ class OtpView extends GetView<OtpController> {
                 ),
               ),
               //
-              SizedBox(
-                width: Get.width * 0.5,
-                child: Text(
-                  "Otp Send on this 9876543210, resend otp after 80s",
-                  style: Theme.of(context).textTheme.bodyMedium,
-                ),
-              ),
+              Obx(() => SizedBox(
+                    width: Get.width * 0.7,
+                    child: Text(
+                      "Otp Send on this ${controller.mobileNumber}, resend otp after ${controller.count}s",
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
+                  )),
               SizedBox(
                 height: 20.h,
               ),
@@ -80,9 +81,9 @@ class OtpView extends GetView<OtpController> {
                             width: Get.width * 0.7,
                             height: 65.h,
                             child: TextFormWidget(
-                              initialValue: controller.mobileNumber,
+                              initialValue: controller.otp,
                               label: "Please enter OTP...",
-                              onChanged: (val) => controller.mobileNumber = val,
+                              onChanged: (val) => controller.otp = val,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                 signed: true,
@@ -108,7 +109,8 @@ class OtpView extends GetView<OtpController> {
               ),
               CustomButton(
                 onPressed: () {
-                  Get.toNamed(Routes.HOME);
+                  // Get.toNamed(Routes.HOME);
+                  controller.otpVerify();
                 },
                 title: "Verify",
               ),

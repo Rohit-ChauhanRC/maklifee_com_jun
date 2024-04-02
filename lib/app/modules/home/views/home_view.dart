@@ -15,15 +15,17 @@ class HomeView extends GetView<HomeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text(
-            "Franchisee",
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
+          title: Obx(() => Text(
+                controller.userType ?? "User",
+                style: Theme.of(context).textTheme.bodyMedium,
+              )),
           automaticallyImplyLeading: false),
       body: SingleChildScrollView(
         child: Column(children: [
           // AppBarContainer(),
-          ProfileContiner(),
+          ProfileContiner(
+            controller: controller,
+          ),
           Container(
             color: AppColors.appColor,
             height: 50.h,

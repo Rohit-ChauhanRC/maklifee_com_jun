@@ -26,7 +26,9 @@ class CartView extends GetView<CartController> {
         child: Column(
           children: [
             // const AppBarContainer(),
-            const ProfileContiner(),
+            ProfileContiner(
+              controller: controller.homeController,
+            ),
 
             Row(
               children: [

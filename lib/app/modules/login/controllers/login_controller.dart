@@ -52,6 +52,8 @@ class LoginController extends GetxController {
     if (mobileNumber == "91234567890" &&
         (inputUser == "Outlet" || inputUser == "Franchiee")) {
       // await createProfile();
+
+      // mobileNumber.substring(start)
       Get.toNamed(Routes.HOME);
     } else {
       await loginCred();
@@ -78,7 +80,7 @@ class LoginController extends GetxController {
         Get.toNamed(Routes.OTP,
             arguments: [inputUser == "Outlet" ? "O" : "F", mobileNumber]);
       } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
-        Get.offNamed(Routes.HOME);
+        Get.offNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
       } else {
         //
         Utils.showDialog(json.decode(res.body));

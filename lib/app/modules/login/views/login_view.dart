@@ -155,6 +155,7 @@ class LoginView extends GetView<LoginController> {
               ),
               CustomButton(
                 onPressed: () {
+                  // Get.toNamed(Routes.OTP, arguments: ["O", "9711784343"]);
                   if (controller.check) {
                     controller.login();
                   }

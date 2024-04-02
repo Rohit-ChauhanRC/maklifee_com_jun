@@ -39,7 +39,9 @@ class OrderView extends GetView<OrderController> {
           child: Column(
             children: [
               // const AppBarContainer(),
-              const ProfileContiner(),
+              ProfileContiner(
+                controller: controller.homeController,
+              ),
               Container(
                 decoration: BoxDecoration(
                   color: AppColors.blueDark.withOpacity(0.3),

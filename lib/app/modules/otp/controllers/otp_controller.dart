@@ -1,7 +1,12 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../../../routes/app_pages.dart';
+import '../../../utils/utils.dart';
 
 class OtpController extends GetxController {
   //
@@ -27,24 +32,11 @@ class OtpController extends GetxController {
   bool get resend => _resend.value;
   set resend(bool v) => _resend.value = v;
 
-  Future<void> counter() async {
-    const oneSec = Duration(seconds: 1);
-    Timer.periodic(
-      oneSec,
-      (Timer timer) async {
-        if (count <= 80) count += 1;
-        if (count == 80) {
-          resend = true;
-          count = 0;
-          // await resendOtp();
-        }
-      },
-    );
-  }
-
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    mobileNumber = Get.arguments[1];
+    await counter();
   }
 
   @override
@@ -55,5 +47,85 @@ class OtpController extends GetxController {
   @override
   void onClose() {
     super.onClose();
+  }
+
+  Future<void> counter() async {
+    const oneSec = Duration(seconds: 1);
+    Timer.periodic(
+      oneSec,
+      (Timer timer) async {
+        if (count <= 80) count += 1;
+        if (count == 80) {
+          resend = true;
+          count = 0;
+          await resendOtp();
+        }
+      },
+    );
+  }
+
+  // http://Payment.maklife.in:98/api/OTPValidation
+
+  Future<dynamic> otpVerify() async {
+    Utils.closeKeyboard();
+    if (!loginFormKey.currentState!.validate()) {
+      return null;
+    }
+    try {
+      var res = await http.post(
+        Uri.parse("http://Payment.maklife.in:98/api/OTPValidation"),
+        body: {
+          "MobileNo": Get.arguments[1].trim(),
+          "OTP": otp.trim(),
+          "UserType": Get.arguments[0]
+        },
+      );
+      if (res.statusCode == 200) {
+        if (jsonDecode(res.body) == "Success") {
+          // await fetchUserData();
+          Get.offNamed(Routes.HOME,
+              arguments: [Get.arguments[0], Get.arguments[1].trim()]);
+        } else if (jsonDecode(res.body) == "Invalid OTP ?") {
+          // print('res.body');
+          Utils.showDialog(jsonDecode(res.body));
+        }
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
+    }
+  }
+
+  Future<dynamic> resendOtp() async {
+    Utils.closeKeyboard();
+    try {
+      var res = await http.post(
+        Uri.parse("http://Payment.maklife.in:98/api/user"),
+        body: {
+          "MobileNo": mobileNumber.trim(),
+          "LogType": "M",
+          "UserType": Get.arguments[0]
+        },
+      );
+      final a = jsonDecode(res.body);
+      if (res.statusCode == 200) {
+      } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
+        Get.offNamed(Routes.HOME, arguments: [
+          Get.arguments[0] == "O" ? "Outlet" : "Franchiee",
+          Get.arguments[1].trim()
+        ]);
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
+
+      showModalBottomSheet<void>(
+          context: Get.context!,
+          builder: (_) {
+            return Text(e.toString());
+          });
+    }
   }
 }

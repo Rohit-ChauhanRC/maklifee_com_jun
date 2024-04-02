@@ -21,7 +21,9 @@ class CartDetailView extends GetView<CartDetailController> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const ProfileContiner(),
+            ProfileContiner(
+              controller: controller.homeController,
+            ),
             Container(
               color: AppColors.appColor,
               height: 30.h,
