@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 
+import '../../../data/models/SubProductModel.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/app_colors/app_colors.dart';
 import '../../../utils/widgets/appBarContainer.dart';
@@ -18,10 +19,10 @@ class OrderView extends GetView<OrderController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Franchisee",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        title: Obx(() => Text(
+              controller.homeController.userType ?? "User",
+              style: Theme.of(context).textTheme.bodyMedium,
+            )),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -67,37 +68,39 @@ class OrderView extends GetView<OrderController> {
                     const SizedBox(
                       height: 20,
                     ),
-                    Obx(() => SizedBox(
-                          // width: Get.width * 0.8,
-                          child: InputDecorator(
-                            decoration: const InputDecoration().applyDefaults(
-                                Theme.of(context).inputDecorationTheme),
-                            child: DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
-                              iconEnabledColor: AppColors.blueDark,
-                              style: Theme.of(context).textTheme.bodySmall,
-                              isExpanded: true,
-                              items: controller.listOfUser
-                                  .map((String dropDownStringItem) {
-                                return DropdownMenuItem<String>(
-                                  value: dropDownStringItem,
-                                  child: SizedBox(
-                                    width: Get.width * 0.6,
-                                    child: Text(
-                                      dropDownStringItem.toString(),
-                                      overflow: TextOverflow.ellipsis,
+                    Obx(() => controller.subProductModel.isNotEmpty
+                        ? SizedBox(
+                            // width: Get.width * 0.8,
+                            child: InputDecorator(
+                              decoration: const InputDecoration().applyDefaults(
+                                  Theme.of(context).inputDecorationTheme),
+                              child: DropdownButtonHideUnderline(
+                                  child: DropdownButton<SubProductModel>(
+                                iconEnabledColor: AppColors.blueDark,
+                                style: Theme.of(context).textTheme.labelMedium,
+                                isExpanded: true,
+                                items: controller.subProductModel
+                                    .map((SubProductModel dropDownStringItem) {
+                                  return DropdownMenuItem<SubProductModel>(
+                                    value: dropDownStringItem,
+                                    child: SizedBox(
+                                      width: Get.width * 0.7,
+                                      child: Text(
+                                        dropDownStringItem.product.toString(),
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
                                     ),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (String? val) {
-                                controller.inputUser = val!;
-                              },
-                              value: controller.inputUser,
-                              isDense: true,
-                            )),
-                          ),
-                        )),
+                                  );
+                                }).toList(),
+                                onChanged: (SubProductModel? val) {
+                                  controller.productModel = val!;
+                                },
+                                value: controller.productModel,
+                                isDense: true,
+                              )),
+                            ),
+                          )
+                        : const SizedBox()),
                     SizedBox(
                       height: 20.h,
                     ),

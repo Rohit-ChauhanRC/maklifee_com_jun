@@ -13,10 +13,10 @@ class CartDetailView extends GetView<CartDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "Franchisee",
-          style: Theme.of(context).textTheme.bodyMedium,
-        ),
+        title: Obx(() => Text(
+              controller.homeController.userType ?? "User",
+              style: Theme.of(context).textTheme.bodyMedium,
+            )),
       ),
       body: SingleChildScrollView(
         child: Column(

@@ -29,6 +29,7 @@ class AppTheme {
             color: AppColors.blueDark,
             fontSize: AppDimens.font16,
             fontWeight: FontWeight.bold,
+            overflow: TextOverflow.visible,
           ),
           displayLarge: const TextStyle(
             color: AppColors.black,
@@ -48,6 +49,11 @@ class AppTheme {
           labelSmall: const TextStyle(
             color: AppColors.white,
             fontSize: AppDimens.font16,
+            fontWeight: FontWeight.bold,
+          ),
+          labelMedium: const TextStyle(
+            color: AppColors.blueDark,
+            fontSize: AppDimens.font14,
             fontWeight: FontWeight.bold,
           ),
         ),

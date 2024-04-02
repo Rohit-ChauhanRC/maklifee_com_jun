@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+import '../../../data/models/getproduct.dart';
 
 class HomeController extends GetxController {
   //
@@ -19,11 +23,20 @@ class HomeController extends GetxController {
   String get userType => _userType.value;
   set userType(String str) => _userType.value = str;
 
+  final RxList<GetProductModel> _products = RxList<GetProductModel>();
+  List<GetProductModel> get products => _products;
+  set products(List<GetProductModel> lt) => _products.assignAll(lt);
+
+  final RxList _p1 = [].obs;
+  List get p1 => _p1;
+  set p1(List ls) => _p1.assignAll(ls);
+
   @override
   void onInit() async {
     super.onInit();
     await fetchUserData();
     userType = Get.arguments[0];
+    await getProductApi();
   }
 
   @override
@@ -61,6 +74,30 @@ class HomeController extends GetxController {
     } catch (e) {
       // apiLopp(i);
       circularProgress = true;
+    }
+  }
+
+  Future<void> getProductApi() async {
+    try {
+      var res = await http.get(
+        Uri.parse("http://Payment.maklife.in:98/api/CategoryBhatinda"),
+      );
+      if (res.statusCode == 200) {
+        print(res.statusCode);
+        if (res.statusCode == 200) {
+          // final v = jsonDecode(res.body);
+          // v.map((e) => GetProductModel.fromJson(e)).toList();
+          print("${jsonDecode(res.body).length}");
+          p1.assignAll(jsonDecode(res.body));
+          print(p1);
+          products.assignAll(jsonDecode(res.body)
+              .map((e) => GetProductModel.fromJson(e))
+              .toList());
+          print("products.length: ${products.length}");
+        }
+      }
+    } catch (e) {
+      // apiLopp(i);
     }
   }
 }
