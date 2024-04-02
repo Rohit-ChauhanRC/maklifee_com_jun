@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maklifee_com/app/routes/app_pages.dart';
 import 'package:maklifee_com/app/utils/app_colors/app_colors.dart';
+import 'package:maklifee_com/app/utils/widgets/check_box_widget.dart';
 
 import '../../../utils/widgets/check_form_field.dart';
 import '../../../utils/widgets/custom_button.dart';
@@ -137,22 +138,26 @@ class LoginView extends GetView<LoginController> {
               SizedBox(
                 height: 20.h,
               ),
-              SizedBox(
-                width: Get.width * 0.75,
-                child: CheckboxFormField(
-                  title: Text(
-                    "* Terms and Condition\nI agree to terms and condition",
-                    style: Theme.of(context).textTheme.displaySmall,
-                  ),
-                ),
-              ),
+              Obx(() => SizedBox(
+                    width: Get.width * 0.75,
+                    child: CheckBoxWidget(
+                      title:
+                          "* Terms and Condition\nI agree to terms and condition",
+                      onChanged: (v) {
+                        controller.check = v!;
+                      },
+                      value: controller.check,
+                    ),
+                  )),
 
               SizedBox(
                 height: 20.h,
               ),
               CustomButton(
                 onPressed: () {
-                  Get.toNamed(Routes.OTP);
+                  if (controller.check) {
+                    controller.login();
+                  }
                 },
                 title: "Login",
               ),

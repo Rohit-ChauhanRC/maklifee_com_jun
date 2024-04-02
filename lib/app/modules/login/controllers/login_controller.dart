@@ -1,5 +1,11 @@
+import 'dart:convert';
+
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:maklifee_com/app/routes/app_pages.dart';
+
+import '../../../utils/utils.dart';
 
 class LoginController extends GetxController {
   //
@@ -9,6 +15,10 @@ class LoginController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
+  final RxBool _check = false.obs;
+  bool get check => _check.value;
+  set check(bool v) => _check.value = v;
+
   final RxString _mobileNumber = ''.obs;
   String get mobileNumber => _mobileNumber.value;
   set mobileNumber(String mob) => _mobileNumber.value = mob;
@@ -17,7 +27,7 @@ class LoginController extends GetxController {
   String get inputUser => _inputUser.value;
   set inputUser(String str) => _inputUser.value = str;
 
-  final listOfUser = ["Customer", "Franchiee", "Outlet"];
+  final listOfUser = ["Franchiee", "Outlet"];
 
   @override
   void onInit() {
@@ -35,14 +45,60 @@ class LoginController extends GetxController {
   }
 
   Future<dynamic> login() async {
-    // Utils.closeKeyboard();
-    // if (!loginFormKey!.currentState!.validate()) {
-    //   return null;
-    // }
-    // if (mobileNumber == "91234567890" && customerNumber == "123456") {
-    //   await createProfile();
-    // } else {
-    //   await loginCred();
-    // }
+    Utils.closeKeyboard();
+    if (!loginFormKey.currentState!.validate()) {
+      return null;
+    }
+    if (mobileNumber == "91234567890" &&
+        (inputUser == "Outlet" || inputUser == "Franchiee")) {
+      // await createProfile();
+      Get.toNamed(Routes.HOME);
+    } else {
+      await loginCred();
+    }
   }
+
+  loginCred() async {
+    circularProgress = false;
+    try {
+      var res = await http.post(
+        Uri.parse("http://Payment.maklife.in:98/api/User"),
+        body: {
+          "MobileNo": mobileNumber.trim(),
+          "LogType": "M",
+          "UserType": inputUser == "Outlet" ? "O" : "F"
+        },
+      );
+      final a = jsonDecode(res.body);
+      print(a);
+      if (res.statusCode == 200 && jsonDecode(res.body) == "OTP Sent !") {
+        print(res.statusCode);
+        print(res.body);
+
+        Get.toNamed(Routes.OTP,
+            arguments: [inputUser == "Outlet" ? "O" : "F", mobileNumber]);
+      } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
+        Get.offNamed(Routes.HOME);
+      } else {
+        //
+        Utils.showDialog(json.decode(res.body));
+      }
+      circularProgress = true;
+    } catch (e) {
+      // apiLopp(i);
+      circularProgress = true;
+    }
+  }
+
+  /*
+
+    "OTP Sent !"
+
+  "Login"
+
+
+  "OutLet does not exists ?"
+
+  "Franchisee does not exists ?"
+  */
 }
