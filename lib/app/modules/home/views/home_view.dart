@@ -28,7 +28,7 @@ class HomeView extends GetView<HomeController> {
           ),
           Container(
             color: AppColors.appColor,
-            height: 50.h,
+            height: 30.h,
             child: Row(
               // mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -71,8 +71,8 @@ class HomeView extends GetView<HomeController> {
                               ),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            margin: const EdgeInsets.all(20),
-                            padding: const EdgeInsets.all(15),
+                            margin: const EdgeInsets.all(10),
+                            padding: const EdgeInsets.all(10),
                             child: Text(
                               controller.p1[i]["CategoryName"].toString(),
                               style: Theme.of(context).textTheme.bodySmall,

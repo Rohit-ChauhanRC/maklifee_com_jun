@@ -20,7 +20,7 @@ class ProfileContiner extends StatelessWidget {
           color: AppColors.blueDark.withOpacity(0.5),
           width: 2,
         ),
-        borderRadius: BorderRadius.circular(30),
+        borderRadius: BorderRadius.circular(20),
       ),
       margin: const EdgeInsets.all(20),
       padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 20),
