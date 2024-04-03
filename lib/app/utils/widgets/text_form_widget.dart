@@ -35,7 +35,6 @@ class TextFormWidget extends StatelessWidget {
       maxLength: maxLength,
       maxLines: null,
       minLines: null,
-      controller: textController,
       validator: validator,
       initialValue: initialValue,
       autovalidateMode: AutovalidateMode.always,

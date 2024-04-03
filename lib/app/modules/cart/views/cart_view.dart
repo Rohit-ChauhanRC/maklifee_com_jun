@@ -10,6 +10,7 @@ import '../../../utils/widgets/appBarContainer.dart';
 import '../../../utils/widgets/date_time_picker_widget.dart';
 import '../../../utils/widgets/profileContiner.dart';
 import '../controllers/cart_controller.dart';
+import 'package:intl/intl.dart';
 
 class CartView extends GetView<CartController> {
   const CartView({Key? key}) : super(key: key);
@@ -40,22 +41,17 @@ class CartView extends GetView<CartController> {
                     initialDate: DateTime.tryParse(controller.fromDate),
                     hintText: "From Date",
                     onChanged: (val) {
-                      controller.fromDate = val!
-                          .copyWith(
-                              hour: 0,
-                              microsecond: 0,
-                              minute: 0,
-                              second: 0,
-                              millisecond: 0)
-                          .subtract(const Duration(days: 1))
-                          .toIso8601String();
-                      print(val);
+                      controller.fromDate =
+                          DateFormat("yyyy-MM-dd").format(val!).toString();
                     },
                   ),
                 ),
                 CustomButton(
                   title: "Search",
-                  onPressed: () {},
+                  onPressed: () {
+                    print(controller.fromDate);
+                    if (controller.fromDate.isNotEmpty) controller.getorder();
+                  },
                 )
               ],
             ),
@@ -65,49 +61,51 @@ class CartView extends GetView<CartController> {
               thickness: 2,
               height: 20.h,
             ),
-            SizedBox(
-              height: Get.height * 0.65,
-              child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (_, i) {
-                    return InkWell(
-                      onTap: () {
-                        Get.toNamed(Routes.CART_DETAIL);
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          border: Border.all(
-                            color: AppColors.blueDark.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            SizedBox(
-                              width: 100.w,
-                              child: Text(
-                                "Ordere ID:",
-                                style: Theme.of(context).textTheme.bodySmall,
+            Obx(() => SizedBox(
+                  height: Get.height * 0.65,
+                  child: ListView.builder(
+                      itemCount: controller.orderList.length,
+                      itemBuilder: (_, i) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(Routes.CART_DETAIL,
+                                arguments: controller.orderList[i].orderId);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              border: Border.all(
+                                color: AppColors.blueDark.withOpacity(0.5),
+                                width: 2,
                               ),
+                              borderRadius: BorderRadius.circular(30),
                             ),
-                            const SizedBox(
-                              width: 20,
+                            margin: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(15),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 100.w,
+                                  child: Text(
+                                    "Ordere ID:",
+                                    style:
+                                        Theme.of(context).textTheme.bodySmall,
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Text(
+                                  controller.orderList[i].orderId ?? "",
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                ),
+                              ],
                             ),
-                            Text(
-                              "F00003509",
-                              style: Theme.of(context).textTheme.bodySmall,
-                            ),
-                          ],
-                        ),
-                      ),
-                    );
-                  }),
-            ),
+                          ),
+                        );
+                      }),
+                )),
           ],
         ),
       ),

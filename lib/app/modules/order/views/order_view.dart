@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../data/models/SubProductModel.dart';
 import '../../../routes/app_pages.dart';
 import '../../../utils/app_colors/app_colors.dart';
+import '../../../utils/utils.dart';
 import '../../../utils/widgets/appBarContainer.dart';
 import '../../../utils/widgets/custom_button.dart';
 import '../../../utils/widgets/profileContiner.dart';
@@ -30,9 +31,11 @@ class OrderView extends GetView<OrderController> {
               image: DecorationImage(
                   opacity: 0.5,
                   alignment: Alignment.bottomRight,
+                  fit: BoxFit.fill,
                   image: Image.asset(
                     "assets/images/bg1.png",
-                    // fit: BoxFit.fill,
+                    fit: BoxFit.fill,
+
                     alignment: Alignment.bottomRight,
                     scale: 1,
                     // isAntiAlias: true,
@@ -43,264 +46,340 @@ class OrderView extends GetView<OrderController> {
               ProfileContiner(
                 controller: controller.homeController,
               ),
-              Container(
-                decoration: BoxDecoration(
-                  color: AppColors.blueDark.withOpacity(0.3),
-                  borderRadius: BorderRadius.circular(30),
-                  border: Border.all(
+              Form(
+                key: controller.orderFormKey,
+                child: Container(
+                  decoration: BoxDecoration(
                     color: AppColors.blueDark.withOpacity(0.3),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(
+                      color: AppColors.blueDark.withOpacity(0.3),
+                    ),
                   ),
-                ),
-                padding: const EdgeInsets.all(10),
-                margin: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    const SizedBox(
-                      height: 10,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Select your product",
-                        style: Theme.of(context).textTheme.displaySmall,
+                  padding: const EdgeInsets.all(10),
+                  margin: const EdgeInsets.all(20),
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Obx(() => controller.subProductModel.isNotEmpty
-                        ? SizedBox(
-                            // width: Get.width * 0.8,
-                            child: InputDecorator(
-                              decoration: const InputDecoration().applyDefaults(
-                                  Theme.of(context).inputDecorationTheme),
-                              child: DropdownButtonHideUnderline(
-                                  child: DropdownButton<SubProductModel>(
-                                iconEnabledColor: AppColors.blueDark,
-                                style: Theme.of(context).textTheme.labelMedium,
-                                isExpanded: true,
-                                items: controller.subProductModel
-                                    .map((SubProductModel dropDownStringItem) {
-                                  return DropdownMenuItem<SubProductModel>(
-                                    value: dropDownStringItem,
-                                    child: SizedBox(
-                                      width: Get.width * 0.7,
-                                      child: Text(
-                                        dropDownStringItem.product.toString(),
-                                        overflow: TextOverflow.ellipsis,
-                                      ),
-                                    ),
-                                  );
-                                }).toList(),
-                                onChanged: (SubProductModel? val) {
-                                  controller.productModel = val!;
-                                },
-                                value: controller.productModel,
-                                isDense: true,
-                              )),
-                            ),
-                          )
-                        : const SizedBox()),
-                    SizedBox(
-                      height: 20.h,
-                    ),
-                    Obx(() => SizedBox(
-                          // width: Get.width * 0.8,
-                          height: 35.h,
-                          child: TextFormWidget(
-                            initialValue: controller.quantity,
-                            label: "Please enter Quntity...",
-                            onChanged: (val) => controller.quantity = val,
-                            keyboardType: const TextInputType.numberWithOptions(
-                              signed: true,
-                            ),
-                            validator: (val) =>
-                                val!.isNotEmpty && int.tryParse(val)! < 1
-                                    ? "Field is required!"
-                                    : null,
-                            inputFormatters: [
-                              FilteringTextInputFormatter.digitsOnly,
-                            ],
-                          ),
-                        )),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        "Product Description",
-                        style: Theme.of(context).textTheme.displaySmall,
-                      ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: AppColors.white,
-                        border: Border.all(
-                          color: AppColors.blueDark.withOpacity(0.5),
-                          width: 2,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      width: Get.width,
-                      // margin: const EdgeInsets.all(20),
-                      padding: const EdgeInsets.all(10),
-                      child: SizedBox(
-                        width: 50.w,
+                      Align(
+                        alignment: Alignment.centerLeft,
                         child: Text(
-                          "Name",
+                          "Select your product",
                           style: Theme.of(context).textTheme.displaySmall,
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    SizedBox(
-                      width: Get.width * 0.4,
-                      child: CustomButton(
-                        onPressed: () {
-                          Get.toNamed(Routes.OTP);
-                        },
-                        title: "Add Item",
+                      const SizedBox(
+                        height: 20,
                       ),
-                    ),
-                  ],
+                      Obx(() => controller.subProductModel.isNotEmpty
+                          ? SizedBox(
+                              // width: Get.width * 0.8,
+                              child: InputDecorator(
+                                decoration: const InputDecoration()
+                                    .applyDefaults(
+                                        Theme.of(context).inputDecorationTheme),
+                                child: DropdownButtonHideUnderline(
+                                    child: DropdownButton<SubProductModel>(
+                                  iconEnabledColor: AppColors.blueDark,
+                                  style:
+                                      Theme.of(context).textTheme.labelMedium,
+                                  isExpanded: true,
+                                  items: controller.subProductModel.map(
+                                      (SubProductModel dropDownStringItem) {
+                                    return DropdownMenuItem<SubProductModel>(
+                                      value: dropDownStringItem,
+                                      child: SizedBox(
+                                        width: Get.width * 0.7,
+                                        child: Text(
+                                          dropDownStringItem.product.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (SubProductModel? val) async {
+                                    controller.productModel = val!;
+                                    await controller.getProductDescApi(
+                                        val.productCode.toString());
+                                  },
+                                  value: controller.productModel,
+                                  isDense: true,
+                                )),
+                              ),
+                            )
+                          : const SizedBox()),
+                      SizedBox(
+                        height: 20.h,
+                      ),
+                      // Obx(() => SizedBox(
+                      //       // width: Get.width * 0.8,
+                      //       height: 35.h,
+                      //       child: TextFormWidget(
+                      //         // maxLength: 2,
+                      //         initialValue: controller.quantity,
+                      //         label: "Please enter Quntity...",
+                      //         onChanged: (val) => controller.quantity = val,
+                      //         keyboardType:
+                      //             const TextInputType.numberWithOptions(
+                      //           signed: true,
+                      //         ),
+                      //         validator: (val) =>
+                      //             val!.isNotEmpty ? "Field is required!" : null,
+                      //         inputFormatters: [
+                      //           FilteringTextInputFormatter.digitsOnly,
+                      //         ],
+                      //       ),
+                      //     )),
+
+                      Obx(() => SizedBox(
+                            // width: Get.width * 0.7,
+                            height: 45.h,
+                            child: TextFormWidget(
+                              initialValue: controller.quantity,
+                              label: "Please enter Quntity...",
+                              onChanged: (val) => controller.quantity = val,
+                              keyboardType:
+                                  const TextInputType.numberWithOptions(
+                                signed: true,
+                              ),
+                              // maxLength: 10,
+                              // validator: (val) => val!.length < 10
+                              //     ? "Field is required!"
+                              //     : null,
+                              inputFormatters: [
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Product Description",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Obx(() => Container(
+                            decoration: BoxDecoration(
+                              color: AppColors.white,
+                              border: Border.all(
+                                color: AppColors.blueDark.withOpacity(0.5),
+                                width: 2,
+                              ),
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                            width: Get.width,
+                            // margin: const EdgeInsets.all(20),
+                            padding: const EdgeInsets.all(10),
+                            child: SizedBox(
+                              width: 50.w,
+                              child: Text(
+                                controller.subProductDescModel.descriptionMaster
+                                        .toString() ??
+                                    "",
+                                style: Theme.of(context).textTheme.displaySmall,
+                              ),
+                            ),
+                          )),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      SizedBox(
+                        width: Get.width * 0.4,
+                        child: CustomButton(
+                          onPressed: () async {
+                            if (controller.quantity.isNotEmpty &&
+                                int.tryParse(controller.quantity) != 0) {
+                              await controller.addItem().then((value) async {
+                                await controller.getUnconfirmOrder();
+                              });
+                            } else {
+                              Utils.showDialog(
+                                  "Please check first quantity either empty or zero!");
+                            }
+                          },
+                          title: "Add Item",
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
-                height: Get.height * 0.2,
-                child: ListView.builder(
-                    itemCount: 10,
-                    itemBuilder: (_, i) {
-                      return Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          border: Border.all(
-                            color: AppColors.blueDark.withOpacity(0.5),
-                            width: 2,
-                          ),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        margin: const EdgeInsets.all(20),
-                        padding: const EdgeInsets.all(15),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 100.w,
-                                  child: Text(
-                                    "Product:",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+              Obx(() => controller.unconfirmOrderList.isNotEmpty
+                  ? Container(
+                      // color: Colors.amber,
+                      height: Get.height * 0.18,
+                      child: ListView.builder(
+                          itemCount: controller.unconfirmOrderList.length,
+                          itemBuilder: (_, i) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                color: AppColors.white,
+                                border: Border.all(
+                                  color: AppColors.blueDark.withOpacity(0.5),
+                                  width: 2,
+                                ),
+                                borderRadius: BorderRadius.circular(30),
+                              ),
+                              margin: const EdgeInsets.all(20),
+                              padding: const EdgeInsets.all(15),
+                              child: Column(
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        width: 100.w,
+                                        child: Text(
+                                          "Product:",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      SizedBox(
+                                        width: Get.width * 0.48,
+                                        child: Text(
+                                          controller
+                                                  .unconfirmOrderList[i].name ??
+                                              "",
+                                          overflow: TextOverflow.visible,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "Pulkit",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 100.w,
-                                  child: Text(
-                                    "Quantity:",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                                  const SizedBox(
+                                    height: 20,
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "10001",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 100.w,
-                                  child: Text(
-                                    "MRP:",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 100.w,
+                                        child: Text(
+                                          "Quantity:",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        controller.unconfirmOrderList[i]
+                                                .qantity ??
+                                            "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                    ],
                                   ),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Text(
-                                  "66",
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                ),
-                                // const SizedBox(
-                                //   width: 50,
-                                // ),
-                                Expanded(
-                                  child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: IconButton(
-                                        onPressed: () {},
-                                        icon: const Icon(
-                                          Icons.delete_forever,
-                                          color: AppColors.red,
-                                        )),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      );
-                    }),
-              ),
+                                  Row(
+                                    children: [
+                                      SizedBox(
+                                        width: 100.w,
+                                        child: Text(
+                                          "MRP:",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodySmall,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        width: 20,
+                                      ),
+                                      Text(
+                                        controller.unconfirmOrderList[i].mrp ??
+                                            "",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall,
+                                      ),
+                                      // const SizedBox(
+                                      //   width: 50,
+                                      // ),
+                                      Expanded(
+                                        child: Align(
+                                          alignment: Alignment.centerRight,
+                                          child: IconButton(
+                                              onPressed: () async {
+                                                await controller
+                                                    .deleteItem(controller
+                                                        .unconfirmOrderList[i]
+                                                        .productId)
+                                                    .then((value) async {
+                                                  await controller
+                                                      .getUnconfirmOrder();
+                                                });
+                                              },
+                                              icon: const Icon(
+                                                Icons.delete_forever,
+                                                color: AppColors.red,
+                                              )),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            );
+                          }),
+                    )
+                  : SizedBox(
+                      height: Get.height * 0.18,
+                    )),
 
               const SizedBox(
                 height: 5,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  SizedBox(
-                    // width: Get.width * 0.4,
-                    child: CustomButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.OTP);
-                      },
-                      title: "Confirm Order",
+              Container(
+                margin: const EdgeInsets.only(bottom: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                      // width: Get.width * 0.4,
+                      child: CustomButton(
+                        onPressed: () async {
+                          await controller.confirmOrder().then((value) async {
+                            await controller.getUnconfirmOrder();
+                          });
+                          // Get.toNamed(Routes.OTP);
+                        },
+                        title: "Confirm Order",
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  SizedBox(
-                    // width: Get.width * 0.4,
-                    child: CustomButton(
-                      onPressed: () {
-                        Get.toNamed(Routes.CART);
-                      },
-                      title: "View Orders",
+                    SizedBox(
+                      width: 10.w,
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      // width: Get.width * 0.4,
+                      child: CustomButton(
+                        onPressed: () {
+                          Get.toNamed(Routes.CART);
+                        },
+                        title: "View Orders",
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(
                 height: 20,

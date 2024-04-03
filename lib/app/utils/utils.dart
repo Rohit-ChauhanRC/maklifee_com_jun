@@ -74,4 +74,15 @@ class Utils {
           ),
         ),
       );
+
+  static showSnackbar(String message) {
+    return ScaffoldMessenger.of(Get.context!).showSnackBar(SnackBar(
+        backgroundColor: AppColors.white,
+        showCloseIcon: true,
+        closeIconColor: AppColors.red,
+        content: Text(
+          message,
+          style: Theme.of(Get.context!).textTheme.bodySmall,
+        )));
+  }
 }
