@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:maklifee_com/app/routes/app_pages.dart';
 import 'package:maklifee_com/app/utils/app_colors/app_colors.dart';
 
-import '../../../utils/widgets/appBarContainer.dart';
 import '../../../utils/widgets/profileContiner.dart';
 import '../controllers/home_controller.dart';
 
@@ -52,7 +51,8 @@ class HomeView extends GetView<HomeController> {
           ),
           Obx(() => controller.p1.length > 1
               ? SizedBox(
-                  height: Get.height * 0.6,
+                  // color: Colors.green,
+                  height: Get.height * 0.65,
                   child: ListView.builder(
                       itemCount: controller.p1.length,
                       itemBuilder: (context, i) {

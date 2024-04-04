@@ -6,7 +6,6 @@ import 'package:maklifee_com/app/routes/app_pages.dart';
 import 'package:maklifee_com/app/utils/widgets/custom_button.dart';
 
 import '../../../utils/app_colors/app_colors.dart';
-import '../../../utils/widgets/appBarContainer.dart';
 import '../../../utils/widgets/date_time_picker_widget.dart';
 import '../../../utils/widgets/profileContiner.dart';
 import '../controllers/cart_controller.dart';
@@ -32,20 +31,26 @@ class CartView extends GetView<CartController> {
 
             Row(
               children: [
-                Container(
-                  padding: const EdgeInsets.all(3),
-                  height: 40.h,
-                  margin: const EdgeInsets.only(left: 20, right: 10),
-                  width: Get.width * 0.45,
-                  child: DateTimePickerWidget(
-                    initialDate: DateTime.tryParse(controller.fromDate),
-                    hintText: "From Date",
-                    onChanged: (val) {
-                      controller.fromDate =
-                          DateFormat("yyyy-MM-dd").format(val!).toString();
-                    },
-                  ),
-                ),
+                Obx(() => Container(
+                      padding: const EdgeInsets.all(3),
+                      margin: const EdgeInsets.only(left: 20, right: 10),
+                      width: Get.width * 0.45,
+                      height: 40.h,
+                      child: DateTimePickerWidget(
+                        initialDate: DateTime.tryParse(controller.fromDate),
+                        hintText: "From Date",
+                        onChanged: (val) {
+                          controller.fromDate =
+                              DateFormat("yyyy-MM-dd").format(val!).toString();
+                        },
+                        onChangedIos: (val) {
+                          print("val: $val");
+                          controller.fromDate =
+                              DateFormat("yyyy-MM-dd").format(val!).toString();
+                        },
+                        lastDate: DateTime.now(),
+                      ),
+                    )),
                 CustomButton(
                   title: "Search",
                   onPressed: () {

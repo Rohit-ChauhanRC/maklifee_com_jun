@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -84,5 +85,22 @@ class Utils {
           message,
           style: Theme.of(Get.context!).textTheme.bodySmall,
         )));
+  }
+
+  static Future<DateTime?> showIOSDatePicker(
+      ctx, void Function(DateTime?) onDateTimeChanged) {
+    return showCupertinoModalPopup(
+        context: ctx,
+        builder: (BuildContext context) => Container(
+              height: 190,
+              color: AppColors.blueDark,
+              child: CupertinoDatePicker(
+                initialDateTime: DateTime.now(),
+                onDateTimeChanged: onDateTimeChanged,
+                mode: CupertinoDatePickerMode.date,
+                maximumDate: DateTime.now(),
+                // dateOrder: DatePickerDateOrder.,
+              ),
+            ));
   }
 }

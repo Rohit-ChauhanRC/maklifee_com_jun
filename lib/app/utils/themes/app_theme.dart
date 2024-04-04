@@ -127,6 +127,16 @@ class AppTheme {
           ),
         ),
         drawerTheme: DrawerThemeData(
-            backgroundColor: AppColors.blueDark.withOpacity(0.7)));
+          backgroundColor: AppColors.blueDark.withOpacity(0.7),
+        ),
+        dialogTheme: DialogTheme(
+          contentTextStyle: textTheme.labelMedium,
+          titleTextStyle: textTheme.labelMedium,
+        ),
+        datePickerTheme: DatePickerThemeData(
+          dayStyle: textTheme.labelMedium,
+          weekdayStyle: textTheme.labelMedium,
+          yearStyle: textTheme.labelMedium,
+        ));
   }
 }

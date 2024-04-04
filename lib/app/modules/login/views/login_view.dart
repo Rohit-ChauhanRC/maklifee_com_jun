@@ -3,12 +3,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
-import 'package:maklifee_com/app/routes/app_pages.dart';
 import 'package:maklifee_com/app/utils/app_colors/app_colors.dart';
 import 'package:maklifee_com/app/utils/widgets/check_box_widget.dart';
 import 'package:upgrader/upgrader.dart';
 
-import '../../../utils/widgets/check_form_field.dart';
 import '../../../utils/widgets/custom_button.dart';
 import '../../../utils/widgets/text_form_widget.dart';
 import '../controllers/login_controller.dart';
