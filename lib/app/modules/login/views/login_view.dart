@@ -63,7 +63,7 @@ class LoginView extends GetView<LoginController> {
                 //
                 SizedBox(
                   child: Text(
-                    "Mak Life E-com",
+                    "MakLife E-com",
                     style: Theme.of(context).textTheme.bodyMedium,
                   ),
                 ),

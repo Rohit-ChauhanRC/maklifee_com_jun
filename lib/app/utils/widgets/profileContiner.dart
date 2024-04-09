@@ -39,9 +39,13 @@ class ProfileContiner extends StatelessWidget {
               const SizedBox(
                 width: 20,
               ),
-              Obx(() => Text(
-                    controller.name.replaceAll('"', "") ?? "Test",
-                    style: Theme.of(context).textTheme.bodySmall,
+              Obx(() => SizedBox(
+                    width: Get.width * 0.6,
+                    child: Text(
+                      controller.name.replaceAll('"', "") ?? "Test",
+                      overflow: TextOverflow.visible,
+                      style: Theme.of(context).textTheme.bodySmall,
+                    ),
                   )),
             ],
           ),

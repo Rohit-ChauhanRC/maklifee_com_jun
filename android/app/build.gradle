@@ -24,7 +24,7 @@ if (flutterVersionName == null) {
 
 android {
     namespace "com.online.maklifee_com"
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 34
     ndkVersion flutter.ndkVersion
 
     compileOptions {

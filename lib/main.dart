@@ -18,7 +18,7 @@ void main() async {
         splitScreenMode: true,
         builder: (_, child) {
           return GetMaterialApp(
-            title: "MaklifeE-com",
+            title: "MaklifeEcom",
             initialRoute: AppPages.INITIAL,
             getPages: AppPages.routes,
             theme: AppTheme.theme,

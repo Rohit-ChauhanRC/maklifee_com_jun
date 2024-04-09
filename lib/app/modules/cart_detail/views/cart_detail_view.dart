@@ -71,10 +71,14 @@ class CartDetailView extends GetView<CartDetailController> {
                                   const SizedBox(
                                     width: 20,
                                   ),
-                                  Text(
-                                    controller.orderList[i].name ?? "",
-                                    style:
-                                        Theme.of(context).textTheme.bodySmall,
+                                  SizedBox(
+                                    width: Get.width * 0.4,
+                                    child: Text(
+                                      controller.orderList[i].name ?? "",
+                                      overflow: TextOverflow.visible,
+                                      style:
+                                          Theme.of(context).textTheme.bodySmall,
+                                    ),
                                   ),
                                 ],
                               ),
@@ -95,7 +99,8 @@ class CartDetailView extends GetView<CartDetailController> {
                                     width: 20,
                                   ),
                                   Text(
-                                    controller.orderList[i].quantity ?? "",
+                                    "${double.tryParse(controller.orderList[i].quantity)!.toDouble().ceil()}" ??
+                                        "",
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),
@@ -164,7 +169,7 @@ class CartDetailView extends GetView<CartDetailController> {
               margin: const EdgeInsets.all(10),
               padding: const EdgeInsets.all(10),
               child: Text(
-                "Your order has been confirmed and delivery will be soon!!",
+                "Your order has been confirmed and delivered will be soon!!",
                 style: Theme.of(context).textTheme.bodySmall,
               ),
             ),

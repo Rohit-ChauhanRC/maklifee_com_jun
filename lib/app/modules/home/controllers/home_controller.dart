@@ -62,6 +62,9 @@ class HomeController extends GetxController {
         },
       );
       if (res.statusCode == 200) {
+        print("res.body: ${res.body}");
+        print("Get.arguments[1].trim(): ${Get.arguments[1].trim()}");
+        print("Get.arguments[0]: ${Get.arguments[0] == "Outlet" ? "O" : "F"}");
         print(Get.arguments[1].trim());
         print(Get.arguments[0].trim());
         print(res.statusCode);

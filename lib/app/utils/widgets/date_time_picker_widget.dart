@@ -37,6 +37,7 @@ class DateTimePickerWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return DateTimeField(
       initialValue: initialDate,
+
       style: Theme.of(context).textTheme.labelMedium,
       // style: Theme.of(context).textTheme.labelMedium,
       textAlign: TextAlign.start,
@@ -59,7 +60,8 @@ class DateTimePickerWidget extends StatelessWidget {
           firstDate: DateTime(1900),
           initialDate: currentValue ?? initialDate,
           lastDate: lastDate ?? DateTime(2100),
-          initialEntryMode: DatePickerEntryMode.calendar,
+          initialEntryMode: DatePickerEntryMode.calendarOnly,
+          // initialDatePickerMode: DatePickerMode.year,
         );
       },
     );

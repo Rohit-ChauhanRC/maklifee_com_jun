@@ -148,7 +148,9 @@ class OrderController extends GetxController {
       } else if (res.statusCode == 200 &&
           jsonDecode(res.body) == "Product is already in cart !") {
         // await getUnconfirmOrder();
-        Utils.showDialog("Product is already in cart !");
+        Utils.showDialog(jsonDecode(res.body));
+      } else if (jsonDecode(res.body) == "Product coul'd not added to cart ?") {
+        Utils.showDialog(jsonDecode(res.body));
       }
     } catch (e) {
       // apiLopp(i);

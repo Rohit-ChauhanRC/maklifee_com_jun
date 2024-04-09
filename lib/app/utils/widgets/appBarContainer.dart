@@ -11,7 +11,7 @@ class AppBarContainer extends StatelessWidget {
       alignment: Alignment.center,
       padding: const EdgeInsets.all(20),
       child: Text(
-        "Franchisee",
+        "Franchise",
         style: Theme.of(context).textTheme.bodyMedium,
       ),
     );

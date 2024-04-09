@@ -27,7 +27,7 @@ class LoginController extends GetxController {
   String get inputUser => _inputUser.value;
   set inputUser(String str) => _inputUser.value = str;
 
-  final listOfUser = ["Franchiee", "Outlet"];
+  final listOfUser = ["Franchise", "Outlet"];
 
   @override
   void onInit() {
@@ -49,12 +49,12 @@ class LoginController extends GetxController {
     if (!loginFormKey.currentState!.validate()) {
       return null;
     }
-    if (mobileNumber == "91234567890" &&
-        (inputUser == "Outlet" || inputUser == "Franchiee")) {
+    if (mobileNumber == "9876543210" &&
+        (inputUser == "Outlet" || inputUser == "Franchise")) {
       // await createProfile();
 
       // mobileNumber.substring(start)
-      Get.toNamed(Routes.HOME);
+      Get.toNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
     } else {
       await loginCred();
     }

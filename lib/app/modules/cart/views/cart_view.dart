@@ -93,7 +93,7 @@ class CartView extends GetView<CartController> {
                                 SizedBox(
                                   width: 100.w,
                                   child: Text(
-                                    "Ordere ID:",
+                                    "Order ID:",
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),

@@ -29,23 +29,27 @@ class HomeView extends GetView<HomeController> {
             color: AppColors.appColor,
             height: 30.h,
             child: Row(
-              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
                   width: 30.w,
                 ),
                 const Text("Product Category"),
-                SizedBox(
-                  width: 100.w,
+                // SizedBox(
+                //   width: 100.w,
+                // ),
+                InkWell(
+                  onTap: () {
+                    Get.toNamed(Routes.CART);
+                  },
+                  child: const Icon(
+                    Icons.shopping_cart_outlined,
+                    color: AppColors.white,
+                  ),
                 ),
-                IconButton(
-                    onPressed: () {
-                      Get.toNamed(Routes.CART);
-                    },
-                    icon: const Icon(
-                      Icons.shopping_cart_outlined,
-                      color: AppColors.white,
-                    ))
+                SizedBox(
+                  width: 20.w,
+                ),
               ],
             ),
           ),

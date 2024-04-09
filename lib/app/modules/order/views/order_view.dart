@@ -71,7 +71,7 @@ class OrderView extends GetView<OrderController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Obx(() => controller.subProductModel.isNotEmpty
                           ? SizedBox(
@@ -94,7 +94,7 @@ class OrderView extends GetView<OrderController> {
                                         width: Get.width * 0.7,
                                         child: Text(
                                           dropDownStringItem.product.toString(),
-                                          overflow: TextOverflow.ellipsis,
+                                          overflow: TextOverflow.visible,
                                         ),
                                       ),
                                     );
@@ -113,38 +113,28 @@ class OrderView extends GetView<OrderController> {
                       SizedBox(
                         height: 20.h,
                       ),
-                      // Obx(() => SizedBox(
-                      //       // width: Get.width * 0.8,
-                      //       height: 35.h,
-                      //       child: TextFormWidget(
-                      //         // maxLength: 2,
-                      //         initialValue: controller.quantity,
-                      //         label: "Please enter Quntity...",
-                      //         onChanged: (val) => controller.quantity = val,
-                      //         keyboardType:
-                      //             const TextInputType.numberWithOptions(
-                      //           signed: true,
-                      //         ),
-                      //         validator: (val) =>
-                      //             val!.isNotEmpty ? "Field is required!" : null,
-                      //         inputFormatters: [
-                      //           FilteringTextInputFormatter.digitsOnly,
-                      //         ],
-                      //       ),
-                      //     )),
-
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: Text(
+                          "Enter product quantity",
+                          style: Theme.of(context).textTheme.displaySmall,
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
                       Obx(() => SizedBox(
                             // width: Get.width * 0.7,
-                            height: 45.h,
+                            height: 60.h,
                             child: TextFormWidget(
                               initialValue: controller.quantity,
-                              label: "Please enter Quntity...",
+                              label: "Please enter Quantity...",
                               onChanged: (val) => controller.quantity = val,
                               keyboardType:
                                   const TextInputType.numberWithOptions(
                                 signed: true,
                               ),
-                              // maxLength: 10,
+                              maxLength: 3,
                               // validator: (val) => val!.length < 10
                               //     ? "Field is required!"
                               //     : null,
@@ -154,7 +144,7 @@ class OrderView extends GetView<OrderController> {
                             ),
                           )),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -164,7 +154,7 @@ class OrderView extends GetView<OrderController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
                       Obx(() => Container(
                             decoration: BoxDecoration(
@@ -191,23 +181,27 @@ class OrderView extends GetView<OrderController> {
                       const SizedBox(
                         height: 20,
                       ),
-                      SizedBox(
-                        width: Get.width * 0.4,
-                        child: CustomButton(
-                          onPressed: () async {
-                            if (controller.quantity.isNotEmpty &&
-                                int.tryParse(controller.quantity) != 0) {
-                              await controller.addItem().then((value) async {
-                                await controller.getUnconfirmOrder();
-                              });
-                            } else {
-                              Utils.showDialog(
-                                  "Please check first quantity either empty or zero!");
-                            }
-                          },
-                          title: "Add Item",
-                        ),
-                      ),
+                      Obx(() => controller.subProductModel.isNotEmpty
+                          ? SizedBox(
+                              width: Get.width * 0.4,
+                              child: CustomButton(
+                                onPressed: () async {
+                                  if (controller.quantity.isNotEmpty &&
+                                      int.tryParse(controller.quantity) != 0) {
+                                    await controller
+                                        .addItem()
+                                        .then((value) async {
+                                      await controller.getUnconfirmOrder();
+                                    });
+                                  } else {
+                                    Utils.showDialog(
+                                        "Please check first quantity either empty or zero!");
+                                  }
+                                },
+                                title: "Add Item",
+                              ),
+                            )
+                          : const SizedBox()),
                     ],
                   ),
                 ),
@@ -248,7 +242,7 @@ class OrderView extends GetView<OrderController> {
                                         width: 20,
                                       ),
                                       SizedBox(
-                                        width: Get.width * 0.48,
+                                        width: Get.width * 0.450,
                                         child: Text(
                                           controller
                                                   .unconfirmOrderList[i].name ??
@@ -279,8 +273,7 @@ class OrderView extends GetView<OrderController> {
                                         width: 20,
                                       ),
                                       Text(
-                                        controller.unconfirmOrderList[i]
-                                                .qantity ??
+                                        "${double.tryParse(controller.unconfirmOrderList[i].qantity)!.toDouble().ceil()}" ??
                                             "",
                                         style: Theme.of(context)
                                             .textTheme
@@ -306,7 +299,7 @@ class OrderView extends GetView<OrderController> {
                                         width: 20,
                                       ),
                                       Text(
-                                        controller.unconfirmOrderList[i].mrp ??
+                                        "₹${controller.unconfirmOrderList[i].mrp}" ??
                                             "",
                                         style: Theme.of(context)
                                             .textTheme
