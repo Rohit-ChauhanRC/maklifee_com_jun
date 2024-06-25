@@ -22,8 +22,8 @@ class ProfileContiner extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(20),
       ),
-      margin: const EdgeInsets.all(20),
-      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 20),
+      margin: const EdgeInsets.only(top: 5, bottom: 5, right: 10, left: 10),
+      padding: const EdgeInsets.only(top: 10, bottom: 10, right: 10, left: 10),
       child: Column(
         children: [
           Row(
@@ -44,14 +44,16 @@ class ProfileContiner extends StatelessWidget {
                     child: Text(
                       controller.name.replaceAll('"', "") ?? "Test",
                       overflow: TextOverflow.visible,
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   )),
             ],
           ),
-          const SizedBox(
-            height: 20,
-          ),
+          // const SizedBox(
+          //   height: 2,
+          // ),
           Row(
             children: [
               SizedBox(
@@ -66,7 +68,9 @@ class ProfileContiner extends StatelessWidget {
               ),
               Obx(() => Text(
                     controller.userId ?? "00",
-                    style: Theme.of(context).textTheme.bodySmall,
+                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
                   )),
             ],
           ),

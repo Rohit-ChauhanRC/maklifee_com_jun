@@ -32,23 +32,29 @@ class HomeView extends GetView<HomeController> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 SizedBox(
-                  width: 30.w,
+                  width: 5.w,
                 ),
                 const Text("Product Category"),
                 // SizedBox(
                 //   width: 100.w,
                 // ),
+
                 InkWell(
                   onTap: () {
                     Get.toNamed(Routes.CART);
                   },
-                  child: const Icon(
-                    Icons.shopping_cart_outlined,
-                    color: AppColors.white,
+                  child: const Row(
+                    children: [
+                      Text("View Orders"),
+                      Icon(
+                        Icons.shopping_cart_outlined,
+                        color: AppColors.white,
+                      ),
+                    ],
                   ),
                 ),
                 SizedBox(
-                  width: 20.w,
+                  width: 10.w,
                 ),
               ],
             ),
@@ -56,7 +62,7 @@ class HomeView extends GetView<HomeController> {
           Obx(() => controller.p1.length > 1
               ? SizedBox(
                   // color: Colors.green,
-                  height: Get.height * 0.65,
+                  height: Get.height * 0.7,
                   child: ListView.builder(
                       itemCount: controller.p1.length,
                       itemBuilder: (context, i) {
@@ -75,7 +81,8 @@ class HomeView extends GetView<HomeController> {
                               ),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            margin: const EdgeInsets.all(10),
+                            margin: const EdgeInsets.only(
+                                top: 5, left: 10, right: 10),
                             padding: const EdgeInsets.all(10),
                             child: Text(
                               controller.p1[i]["CategoryName"].toString(),

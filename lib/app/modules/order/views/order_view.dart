@@ -57,11 +57,11 @@ class OrderView extends GetView<OrderController> {
                     ),
                   ),
                   padding: const EdgeInsets.all(10),
-                  margin: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.only(top: 5, left: 10, right: 10),
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -71,7 +71,7 @@ class OrderView extends GetView<OrderController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Obx(() => controller.subProductModel.isNotEmpty
                           ? SizedBox(
@@ -111,7 +111,7 @@ class OrderView extends GetView<OrderController> {
                             )
                           : const SizedBox()),
                       SizedBox(
-                        height: 20.h,
+                        height: 5.h,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -121,7 +121,7 @@ class OrderView extends GetView<OrderController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Obx(() => SizedBox(
                             // width: Get.width * 0.7,
@@ -143,9 +143,9 @@ class OrderView extends GetView<OrderController> {
                               ],
                             ),
                           )),
-                      const SizedBox(
-                        height: 10,
-                      ),
+                      // const SizedBox(
+                      //   height: 5,
+                      // ),
                       Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -154,7 +154,7 @@ class OrderView extends GetView<OrderController> {
                         ),
                       ),
                       const SizedBox(
-                        height: 10,
+                        height: 5,
                       ),
                       Obx(() => Container(
                             decoration: BoxDecoration(
@@ -179,7 +179,7 @@ class OrderView extends GetView<OrderController> {
                             ),
                           )),
                       const SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Obx(() => controller.subProductModel.isNotEmpty
                           ? SizedBox(
@@ -209,7 +209,7 @@ class OrderView extends GetView<OrderController> {
               Obx(() => controller.unconfirmOrderList.isNotEmpty
                   ? Container(
                       // color: Colors.amber,
-                      height: Get.height * 0.18,
+                      height: Get.height * 0.3,
                       child: ListView.builder(
                           itemCount: controller.unconfirmOrderList.length,
                           itemBuilder: (_, i) {
@@ -222,8 +222,9 @@ class OrderView extends GetView<OrderController> {
                                 ),
                                 borderRadius: BorderRadius.circular(30),
                               ),
-                              margin: const EdgeInsets.all(20),
-                              padding: const EdgeInsets.all(15),
+                              margin: const EdgeInsets.only(
+                                  top: 5, left: 10, right: 10),
+                              padding: const EdgeInsets.all(10),
                               child: Column(
                                 children: [
                                   Row(
@@ -256,7 +257,7 @@ class OrderView extends GetView<OrderController> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 20,
+                                    height: 5,
                                   ),
                                   Row(
                                     children: [
@@ -282,7 +283,7 @@ class OrderView extends GetView<OrderController> {
                                     ],
                                   ),
                                   const SizedBox(
-                                    height: 10,
+                                    height: 5,
                                   ),
                                   Row(
                                     children: [
@@ -311,8 +312,8 @@ class OrderView extends GetView<OrderController> {
                                       Expanded(
                                         child: Align(
                                           alignment: Alignment.centerRight,
-                                          child: IconButton(
-                                              onPressed: () async {
+                                          child: InkWell(
+                                              onTap: () async {
                                                 await controller
                                                     .deleteItem(controller
                                                         .unconfirmOrderList[i]
@@ -322,7 +323,7 @@ class OrderView extends GetView<OrderController> {
                                                       .getUnconfirmOrder();
                                                 });
                                               },
-                                              icon: const Icon(
+                                              child: const Icon(
                                                 Icons.delete_forever,
                                                 color: AppColors.red,
                                               )),
@@ -336,14 +337,14 @@ class OrderView extends GetView<OrderController> {
                           }),
                     )
                   : SizedBox(
-                      height: Get.height * 0.18,
+                      height: Get.height * 0.3,
                     )),
 
               const SizedBox(
                 height: 5,
               ),
               Container(
-                margin: const EdgeInsets.only(bottom: 20),
+                margin: const EdgeInsets.only(bottom: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -374,9 +375,9 @@ class OrderView extends GetView<OrderController> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              // const SizedBox(
+              //   height: 10,
+              // ),
             ],
           ),
         ),

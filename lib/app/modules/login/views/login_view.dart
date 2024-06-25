@@ -116,7 +116,7 @@ class LoginView extends GetView<LoginController> {
                               ),
                             )),
                         SizedBox(
-                          height: 30.h,
+                          height: 10.h,
                         ),
                         Obx(() => SizedBox(
                               width: Get.width * 0.7,

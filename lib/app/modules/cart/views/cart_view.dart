@@ -85,7 +85,9 @@ class CartView extends GetView<CartController> {
                               ),
                               borderRadius: BorderRadius.circular(30),
                             ),
-                            margin: const EdgeInsets.all(20),
+                            // margin: const EdgeInsets.all(20),
+                            margin: const EdgeInsets.only(
+                                top: 5, left: 10, right: 10),
                             padding: const EdgeInsets.all(15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,

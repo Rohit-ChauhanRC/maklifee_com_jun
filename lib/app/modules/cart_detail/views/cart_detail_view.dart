@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -32,7 +33,7 @@ class CartDetailView extends GetView<CartDetailController> {
               child: const Text("Your Ordered Products"),
             ),
             Obx(() => Container(
-                  margin: const EdgeInsets.only(top: 20),
+                  margin: const EdgeInsets.only(top: 5),
                   color: AppColors.appColor,
                   height: 30.h,
                   width: Get.width,
@@ -40,7 +41,7 @@ class CartDetailView extends GetView<CartDetailController> {
                   child: Text("Order Id - ${controller.orderId}"),
                 )),
             Obx(() => SizedBox(
-                  height: Get.height * 0.47,
+                  height: Get.height * 0.55,
                   child: ListView.builder(
                       itemCount: controller.orderList.length,
                       itemBuilder: (_, i) {
@@ -53,8 +54,9 @@ class CartDetailView extends GetView<CartDetailController> {
                             ),
                             borderRadius: BorderRadius.circular(30),
                           ),
-                          margin: const EdgeInsets.all(20),
-                          padding: const EdgeInsets.all(15),
+                          margin: const EdgeInsets.only(
+                              top: 5, left: 10, right: 10),
+                          padding: const EdgeInsets.all(10),
                           child: Column(
                             children: [
                               Row(
@@ -72,7 +74,8 @@ class CartDetailView extends GetView<CartDetailController> {
                                     width: 20,
                                   ),
                                   SizedBox(
-                                    width: Get.width * 0.4,
+                                    // color: Colors.green,
+                                    width: Get.width * 0.55,
                                     child: Text(
                                       controller.orderList[i].name ?? "",
                                       overflow: TextOverflow.visible,
@@ -83,7 +86,7 @@ class CartDetailView extends GetView<CartDetailController> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 20,
+                                height: 5,
                               ),
                               Row(
                                 children: [
@@ -107,7 +110,7 @@ class CartDetailView extends GetView<CartDetailController> {
                                 ],
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               Row(
                                 children: [
@@ -123,14 +126,14 @@ class CartDetailView extends GetView<CartDetailController> {
                                     width: 20,
                                   ),
                                   Text(
-                                    controller.orderList[i].mrp ?? "",
+                                    "₹${controller.orderList[i].mrp}/-" ?? "",
                                     style:
                                         Theme.of(context).textTheme.bodySmall,
                                   ),
                                 ],
                               ),
                               const SizedBox(
-                                height: 10,
+                                height: 5,
                               ),
                               Row(
                                 children: [

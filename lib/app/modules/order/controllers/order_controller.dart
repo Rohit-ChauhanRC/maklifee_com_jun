@@ -202,15 +202,10 @@ class OrderController extends GetxController {
         body: {"CustomerId": homeController.userId},
       );
       print(jsonDecode(res.body));
-      if (res.statusCode == 200 &&
-          jsonDecode(res.body) == "No record found ?") {
+      if (res.statusCode == 200) {
         Utils.showSnackbar(jsonDecode(res.body));
 
-        //  sackbar
-      } else if (res.statusCode == 200 &&
-          jsonDecode(res.body) ==
-              "Your order has been placed successfully ! Your Order Id = F00003541 and will shipped soon !") {
-        Utils.showSnackbar(jsonDecode(res.body));
+        // quantity = "";
 
         //  sackbar
       }
