@@ -23,7 +23,7 @@ class LoginController extends GetxController {
   String get mobileNumber => _mobileNumber.value;
   set mobileNumber(String mob) => _mobileNumber.value = mob;
 
-  final RxString _inputUser = "Outlet".obs;
+  final RxString _inputUser = "Franchise".obs;
   String get inputUser => _inputUser.value;
   set inputUser(String str) => _inputUser.value = str;
 

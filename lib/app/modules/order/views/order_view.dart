@@ -111,7 +111,7 @@ class OrderView extends GetView<OrderController> {
                             )
                           : const SizedBox()),
                       SizedBox(
-                        height: 5.h,
+                        height: 10.h,
                       ),
                       Align(
                         alignment: Alignment.centerLeft,
@@ -125,7 +125,7 @@ class OrderView extends GetView<OrderController> {
                       ),
                       Obx(() => SizedBox(
                             // width: Get.width * 0.7,
-                            height: 60.h,
+                            height: 50.h,
                             child: TextFormWidget(
                               initialValue: controller.quantity,
                               label: "Please enter Quantity...",
