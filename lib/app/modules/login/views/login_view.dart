@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:maklifee_com/app/utils/app_colors/app_colors.dart';
 import 'package:maklifee_com/app/utils/widgets/check_box_widget.dart';
+import 'package:maklifee_com/app/utils/widgets/radio_widget.dart';
 import 'package:upgrader/upgrader.dart';
 
 import '../../../utils/widgets/custom_button.dart';
@@ -83,38 +84,65 @@ class LoginView extends GetView<LoginController> {
                     key: controller.loginFormKey,
                     child: Column(
                       children: [
-                        Obx(() => SizedBox(
-                              width: Get.width * 0.7,
-                              child: InputDecorator(
-                                decoration: const InputDecoration()
-                                    .applyDefaults(
-                                        Theme.of(context).inputDecorationTheme),
-                                child: DropdownButtonHideUnderline(
-                                    child: DropdownButton<String>(
-                                  iconEnabledColor: AppColors.blueDark,
-                                  style: Theme.of(context).textTheme.bodySmall,
-                                  isExpanded: true,
-                                  items: controller.listOfUser
-                                      .map((String dropDownStringItem) {
-                                    return DropdownMenuItem<String>(
-                                      value: dropDownStringItem,
-                                      child: SizedBox(
-                                        width: Get.width * 0.6,
-                                        child: Text(
-                                          dropDownStringItem.toString(),
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? val) {
-                                    controller.inputUser = val!;
-                                  },
-                                  value: controller.inputUser,
-                                  isDense: true,
-                                )),
-                              ),
+                        Obx(() => OptionWidget(
+                              index: 0,
+                              press: (v) {
+                                controller.selectedButton = v;
+                                controller.inputUser = "Franchise";
+                              },
+                              selectedButton: controller.selectedButton,
+                              text: "Franchise",
                             )),
+                        Obx(() => OptionWidget(
+                              index: 1,
+                              press: (v) {
+                                controller.selectedButton = v;
+                                controller.inputUser = "Outlet";
+                              },
+                              selectedButton: controller.selectedButton,
+                              text: "Outlet",
+                            )),
+                        // Obx(() => OptionWidget(
+                        //       index: 2,
+                        //       press: (v) {
+                        //         controller.selectedButton = v;
+                        //       },
+                        //       selectedButton: controller.selectedButton,
+                        //       text: "Customer",
+                        //     )),
+                        // Obx(() => SizedBox(
+                        //       width: Get.width * 0.7,
+                        //       child: InputDecorator(
+                        //         decoration: const InputDecoration()
+                        //             .applyDefaults(
+                        //                 Theme.of(context).inputDecorationTheme),
+                        //         child: DropdownButtonHideUnderline(
+                        //             child: DropdownButton<String>(
+                        //           iconEnabledColor: AppColors.blueDark,
+                        //           style: Theme.of(context).textTheme.bodySmall,
+                        //           isExpanded: true,
+                        //           items: controller.listOfUser
+                        //               .map((String dropDownStringItem) {
+                        //             return DropdownMenuItem<String>(
+                        //               value: dropDownStringItem,
+                        //               child: SizedBox(
+                        //                 width: Get.width * 0.6,
+                        //                 child: Text(
+                        //                   dropDownStringItem.toString(),
+                        //                   overflow: TextOverflow.ellipsis,
+                        //                 ),
+                        //               ),
+                        //             );
+                        //           }).toList(),
+                        //           onChanged: (String? val) {
+                        //             controller.inputUser = val!;
+                        //           },
+                        //           value: controller.inputUser,
+                        //           isDense: true,
+                        //         )),
+                        //       ),
+                        //     )),
+
                         SizedBox(
                           height: 10.h,
                         ),
@@ -130,12 +158,13 @@ class LoginView extends GetView<LoginController> {
                                     const TextInputType.numberWithOptions(
                                   signed: true,
                                 ),
-                                maxLength: 10,
+                                // maxLength: 10,
                                 validator: (val) => val!.length < 10
                                     ? "Field is required!"
                                     : null,
                                 inputFormatters: [
                                   FilteringTextInputFormatter.digitsOnly,
+                                  LengthLimitingTextInputFormatter(10),
                                 ],
                               ),
                             )),
@@ -152,7 +181,7 @@ class LoginView extends GetView<LoginController> {
                         title:
                             "* Terms and Condition\nI agree to terms and condition",
                         onChanged: (v) {
-                          controller.check = v!;
+                          // controller.check = v!;
                         },
                         value: controller.check,
                       ),

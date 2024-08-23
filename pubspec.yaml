@@ -18,6 +18,7 @@ dependencies:
   intl: null
   # permission_handler: ^11.3.1
   upgrader: ^9.0.0
+  lottie: ^3.1.2
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -39,6 +40,7 @@ flutter:
 
   assets:
     - assets/images/
+    - assets/vectors/
 
   fonts:
     - family: Nunito

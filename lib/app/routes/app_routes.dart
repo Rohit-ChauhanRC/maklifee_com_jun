@@ -9,6 +9,7 @@ abstract class Routes {
   static const ORDER = _Paths.ORDER;
   static const CART = _Paths.CART;
   static const CART_DETAIL = _Paths.CART_DETAIL;
+  static const SPLASH = _Paths.SPLASH;
 }
 
 abstract class _Paths {
@@ -19,4 +20,5 @@ abstract class _Paths {
   static const ORDER = '/order';
   static const CART = '/cart';
   static const CART_DETAIL = '/cart-detail';
+  static const SPLASH = '/splash';
 }

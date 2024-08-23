@@ -29,26 +29,28 @@ class TextFormWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
-      expands: true,
-      // key: UniqueKey(),
-      maxLength: maxLength,
-      maxLines: null,
-      minLines: null,
-      validator: validator,
-      initialValue: initialValue,
-      autovalidateMode: AutovalidateMode.always,
-      onChanged: onChanged,
-      style: Theme.of(context).textTheme.bodySmall,
-      readOnly: readOnly,
-      inputFormatters: inputFormatters,
-      keyboardType: keyboardType ?? TextInputType.text,
-      decoration: InputDecoration(
-              hintText: label,
-              contentPadding: const EdgeInsets.only(bottom: 5, left: 10)
-              // label: Text(label!),
-              )
-          .applyDefaults(Theme.of(context).inputDecorationTheme),
+    return SizedBox(
+      height: 50,
+      child: TextFormField(
+        // expands: true,
+        // key: UniqueKey(),
+        // maxLength: maxLength,
+        // maxLines: null,
+        // minLines: null,
+        validator: validator,
+        initialValue: initialValue,
+        autovalidateMode: AutovalidateMode.always,
+        onChanged: onChanged,
+        style: Theme.of(context).textTheme.bodySmall,
+        readOnly: readOnly,
+        inputFormatters: inputFormatters,
+        keyboardType: keyboardType ?? TextInputType.text,
+        decoration: InputDecoration(
+                hintText: label, contentPadding: const EdgeInsets.all(10)
+                // label: Text(label!),
+                )
+            .applyDefaults(Theme.of(context).inputDecorationTheme),
+      ),
     );
   }
 }

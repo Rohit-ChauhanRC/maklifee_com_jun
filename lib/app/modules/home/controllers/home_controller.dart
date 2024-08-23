@@ -93,9 +93,7 @@ class HomeController extends GetxController {
           print("${jsonDecode(res.body).length}");
           p1.assignAll(jsonDecode(res.body));
           print(p1);
-          products.assignAll(jsonDecode(res.body)
-              .map((e) => GetProductModel.fromJson(e))
-              .toList());
+          products.assignAll(getProductModelFromMap(res.body));
           print("products.length: ${products.length}");
         }
       }

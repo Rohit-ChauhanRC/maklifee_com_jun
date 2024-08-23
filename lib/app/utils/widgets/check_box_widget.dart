@@ -28,7 +28,7 @@ class CheckBoxWidget extends StatelessWidget {
         children: [
           Checkbox(
             onChanged: onChanged,
-            value: value,
+            value: true,
             activeColor: Colors.green,
           ),
           InkWell(

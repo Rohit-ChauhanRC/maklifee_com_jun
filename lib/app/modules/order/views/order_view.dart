@@ -134,12 +134,13 @@ class OrderView extends GetView<OrderController> {
                                   const TextInputType.numberWithOptions(
                                 signed: true,
                               ),
-                              maxLength: 3,
+                              // maxLength: 3,
                               // validator: (val) => val!.length < 10
                               //     ? "Field is required!"
                               //     : null,
                               inputFormatters: [
                                 FilteringTextInputFormatter.digitsOnly,
+                                LengthLimitingTextInputFormatter(4),
                               ],
                             ),
                           )),
@@ -171,9 +172,9 @@ class OrderView extends GetView<OrderController> {
                             child: SizedBox(
                               width: 50.w,
                               child: Text(
-                                controller.subProductDescModel.descriptionMaster
-                                        .toString() ??
-                                    "",
+                                controller.subProductDescModel
+                                        .descriptionMaster ??
+                                    "NA",
                                 style: Theme.of(context).textTheme.displaySmall,
                               ),
                             ),

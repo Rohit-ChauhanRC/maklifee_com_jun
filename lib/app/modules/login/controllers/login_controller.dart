@@ -15,7 +15,7 @@ class LoginController extends GetxController {
   bool get circularProgress => _circularProgress.value;
   set circularProgress(bool v) => _circularProgress.value = v;
 
-  final RxBool _check = false.obs;
+  final RxBool _check = true.obs;
   bool get check => _check.value;
   set check(bool v) => _check.value = v;
 
@@ -28,6 +28,10 @@ class LoginController extends GetxController {
   set inputUser(String str) => _inputUser.value = str;
 
   final listOfUser = ["Franchise", "Outlet"];
+
+  final RxInt _selectedButton = 0.obs;
+  int get selectedButton => _selectedButton.value;
+  set selectedButton(int i) => _selectedButton.value = i;
 
   @override
   void onInit() {
@@ -80,7 +84,7 @@ class LoginController extends GetxController {
         Get.toNamed(Routes.OTP,
             arguments: [inputUser == "Outlet" ? "O" : "F", mobileNumber]);
       } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
-        Get.offNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
+        await fetchUserData();
       } else {
         //
         Utils.showDialog(json.decode(res.body));
@@ -89,6 +93,29 @@ class LoginController extends GetxController {
     } catch (e) {
       // apiLopp(i);
       circularProgress = true;
+    }
+  }
+
+  Future<void> fetchUserData() async {
+    try {
+      var res = await http.post(
+        Uri.parse(
+          "http://Payment.maklife.in:98/api/CustomerId",
+        ),
+        body: {
+          "MobileNo": mobileNumber.trim(),
+          "UserType": inputUser == "Outlet" ? "O" : "F"
+        },
+      );
+      if (res.statusCode == 200 &&
+          json.decode(res.body) != "No Record Found ?") {
+        Get.offNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
+      } else {
+        //
+        Utils.showDialog(json.decode(res.body));
+      }
+    } catch (e) {
+      // apiLopp(i);
     }
   }
 
