@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:maklifee_com/app/utils/constants.dart';
 
 import '../../../data/models/getproduct.dart';
 
@@ -31,11 +32,16 @@ class HomeController extends GetxController {
   List get p1 => _p1;
   set p1(List ls) => _p1.assignAll(ls);
 
+  final RxString _inputPlant = "".obs;
+  String get inputPlant => _inputPlant.value;
+  set inputPlant(String str) => _inputPlant.value = str;
+
   @override
   void onInit() async {
     super.onInit();
     await fetchUserData();
     userType = Get.arguments[0];
+    inputPlant = Get.arguments[2];
     await getProductApi();
   }
 
@@ -54,11 +60,12 @@ class HomeController extends GetxController {
       print("object");
       var res = await http.post(
         Uri.parse(
-          "http://Payment.maklife.in:98/api/CustomerId",
+          "$baseUrl/$userData",
         ),
         body: {
           "MobileNo": Get.arguments[1].trim(),
-          "UserType": Get.arguments[0] == "Outlet" ? "O" : "F"
+          "UserType": Get.arguments[0] == "Outlet" ? "O" : "F",
+          "PlantName": Get.arguments[2],
         },
       );
       if (res.statusCode == 200) {
@@ -83,7 +90,7 @@ class HomeController extends GetxController {
   Future<void> getProductApi() async {
     try {
       var res = await http.get(
-        Uri.parse("http://Payment.maklife.in:98/api/CategoryBhatinda"),
+        Uri.parse("$baseUrl/$categoryBhatinda?PlantName=${Get.arguments[2]}"),
       );
       if (res.statusCode == 200) {
         print(res.statusCode);

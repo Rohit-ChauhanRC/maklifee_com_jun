@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:maklifee_com/app/modules/home/controllers/home_controller.dart';
 import 'package:http/http.dart' as http;
+import 'package:maklifee_com/app/utils/constants.dart';
 
 import '../../../data/models/getOrderModel.dart';
 
@@ -39,7 +40,7 @@ class CartController extends GetxController {
     try {
       var res = await http.get(
         Uri.parse(
-            "http://Payment.maklife.in:98/api/FranchiseeorderConfirm?CustomerId=${homeController.userId}&Dated=$fromDate"),
+            "$baseUrl/$franchiseeorderConfirm=${homeController.userId}&Dated=$fromDate"),
       );
       print(jsonDecode(res.body));
       if (res.statusCode == 200) {

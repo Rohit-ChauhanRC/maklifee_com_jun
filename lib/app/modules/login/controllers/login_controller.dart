@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:maklifee_com/app/data/models/plant_list_model.dart';
 import 'package:maklifee_com/app/routes/app_pages.dart';
+import 'package:maklifee_com/app/utils/constants.dart';
 
 import '../../../utils/utils.dart';
 
@@ -33,9 +35,18 @@ class LoginController extends GetxController {
   int get selectedButton => _selectedButton.value;
   set selectedButton(int i) => _selectedButton.value = i;
 
+  final RxList<PlantListModel?> plantList = <PlantListModel?>[].obs;
+
+  final RxList<String> plantListString = <String>[].obs;
+
+  final RxString _inputPlant = "".obs;
+  String get inputPlant => _inputPlant.value;
+  set inputPlant(String str) => _inputPlant.value = str;
+
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    await getPlantData();
   }
 
   @override
@@ -48,7 +59,29 @@ class LoginController extends GetxController {
     super.onClose();
   }
 
-  Future<dynamic> login() async {
+  Future<void> getPlantData() async {
+    try {
+      var res = await http.get(Uri.parse("$baseUrl/$getPlant"));
+
+      if (res.statusCode == 200) {
+        // plantList.assignAll(json.decode(res.body) as Iterable<GetPlantModel?>);
+        inputPlant = plantListModelFromJson(res.body).data.first.plantName;
+
+        for (var e in plantListModelFromJson(res.body).data) {
+          plantListString.add(e.plantName.toString());
+        }
+        print(plantListString.first);
+        // Get.offNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
+      } else {
+        //
+        // Utils.showDialog(json.decode(res.body));
+      }
+    } catch (e) {
+      // apiLopp(i);
+    }
+  }
+
+  Future<dynamic> loginApi() async {
     Utils.closeKeyboard();
     if (!loginFormKey.currentState!.validate()) {
       return null;
@@ -58,7 +91,8 @@ class LoginController extends GetxController {
       // await createProfile();
 
       // mobileNumber.substring(start)
-      Get.toNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
+      Get.toNamed(Routes.HOME,
+          arguments: [inputUser, mobileNumber, inputPlant]);
     } else {
       await loginCred();
     }
@@ -68,11 +102,12 @@ class LoginController extends GetxController {
     circularProgress = false;
     try {
       var res = await http.post(
-        Uri.parse("http://Payment.maklife.in:98/api/User"),
+        Uri.parse("$baseUrl/$login"),
         body: {
           "MobileNo": mobileNumber.trim(),
           "LogType": "M",
-          "UserType": inputUser == "Outlet" ? "O" : "F"
+          "UserType": inputUser == "Outlet" ? "O" : "F",
+          "PlantName": inputPlant,
         },
       );
       final a = jsonDecode(res.body);
@@ -81,8 +116,11 @@ class LoginController extends GetxController {
         print(res.statusCode);
         print(res.body);
 
-        Get.toNamed(Routes.OTP,
-            arguments: [inputUser == "Outlet" ? "O" : "F", mobileNumber]);
+        Get.toNamed(Routes.OTP, arguments: [
+          inputUser == "Outlet" ? "O" : "F",
+          mobileNumber,
+          inputPlant
+        ]);
       } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
         await fetchUserData();
       } else {
@@ -100,16 +138,18 @@ class LoginController extends GetxController {
     try {
       var res = await http.post(
         Uri.parse(
-          "http://Payment.maklife.in:98/api/CustomerId",
+          "$baseUrl/$userData",
         ),
         body: {
           "MobileNo": mobileNumber.trim(),
-          "UserType": inputUser == "Outlet" ? "O" : "F"
+          "UserType": inputUser == "Outlet" ? "O" : "F",
+          "PlantName": inputPlant,
         },
       );
       if (res.statusCode == 200 &&
           json.decode(res.body) != "No Record Found ?") {
-        Get.offNamed(Routes.HOME, arguments: [inputUser, mobileNumber]);
+        Get.offNamed(Routes.HOME,
+            arguments: [inputUser, mobileNumber, inputPlant]);
       } else {
         //
         Utils.showDialog(json.decode(res.body));

@@ -368,7 +368,10 @@ class OrderView extends GetView<OrderController> {
                       // width: Get.width * 0.4,
                       child: CustomButton(
                         onPressed: () {
-                          Get.toNamed(Routes.CART);
+                          Get.toNamed(
+                            Routes.CART,
+                            arguments: Get.arguments,
+                          );
                         },
                         title: "View Orders",
                       ),

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:maklifee_com/app/utils/constants.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../utils/utils.dart';
@@ -32,10 +33,15 @@ class OtpController extends GetxController {
   bool get resend => _resend.value;
   set resend(bool v) => _resend.value = v;
 
+  final RxString _inputPlant = "".obs;
+  String get inputPlant => _inputPlant.value;
+  set inputPlant(String str) => _inputPlant.value = str;
+
   @override
   void onInit() async {
     super.onInit();
     mobileNumber = Get.arguments[1];
+    inputPlant = Get.arguments[2];
     await counter();
   }
 
@@ -73,7 +79,7 @@ class OtpController extends GetxController {
     }
     try {
       var res = await http.post(
-        Uri.parse("http://Payment.maklife.in:98/api/OTPValidation"),
+        Uri.parse("$baseUrl/$oTPValidation"),
         body: {
           "MobileNo": Get.arguments[1].trim(),
           "OTP": otp.trim(),
@@ -83,8 +89,11 @@ class OtpController extends GetxController {
       if (res.statusCode == 200) {
         if (jsonDecode(res.body) == "Success") {
           // await fetchUserData();
-          Get.offNamed(Routes.HOME,
-              arguments: [Get.arguments[0], Get.arguments[1].trim()]);
+          Get.offNamed(Routes.HOME, arguments: [
+            Get.arguments[0],
+            Get.arguments[1].trim(),
+            Get.arguments[2]
+          ]);
         } else if (jsonDecode(res.body) == "Invalid OTP ?") {
           // print('res.body');
           Utils.showDialog(jsonDecode(res.body));
@@ -101,11 +110,12 @@ class OtpController extends GetxController {
     Utils.closeKeyboard();
     try {
       var res = await http.post(
-        Uri.parse("http://Payment.maklife.in:98/api/user"),
+        Uri.parse("$baseUrl/$login"),
         body: {
           "MobileNo": mobileNumber.trim(),
           "LogType": "M",
-          "UserType": Get.arguments[0]
+          "UserType": Get.arguments[0],
+          "PlantName": Get.arguments[2],
         },
       );
       final a = jsonDecode(res.body);
@@ -113,7 +123,8 @@ class OtpController extends GetxController {
       } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
         Get.offNamed(Routes.HOME, arguments: [
           Get.arguments[0] == "O" ? "Outlet" : "Franchiee",
-          Get.arguments[1].trim()
+          Get.arguments[1].trim(),
+          Get.arguments[2],
         ]);
       }
       circularProgress = true;

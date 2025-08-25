@@ -41,7 +41,10 @@ class HomeView extends GetView<HomeController> {
 
                 InkWell(
                   onTap: () {
-                    Get.toNamed(Routes.CART);
+                    Get.toNamed(
+                      Routes.CART,
+                      arguments: Get.arguments[2],
+                    );
                   },
                   child: const Row(
                     children: [
@@ -68,9 +71,10 @@ class HomeView extends GetView<HomeController> {
                       itemBuilder: (context, i) {
                         return InkWell(
                           onTap: () {
-                            Get.toNamed(Routes.ORDER,
-                                arguments: controller.p1[i]["CategoryName"]
-                                    .toString());
+                            Get.toNamed(Routes.ORDER, arguments: [
+                              controller.p1[i]["CategoryName"].toString(),
+                              Get.arguments[2],
+                            ]);
                           },
                           child: Container(
                             decoration: BoxDecoration(

@@ -84,64 +84,82 @@ class LoginView extends GetView<LoginController> {
                     key: controller.loginFormKey,
                     child: Column(
                       children: [
-                        Obx(() => OptionWidget(
-                              index: 0,
-                              press: (v) {
-                                controller.selectedButton = v;
-                                controller.inputUser = "Franchise";
-                              },
-                              selectedButton: controller.selectedButton,
-                              text: "Franchise",
-                            )),
-                        Obx(() => OptionWidget(
-                              index: 1,
-                              press: (v) {
-                                controller.selectedButton = v;
-                                controller.inputUser = "Outlet";
-                              },
-                              selectedButton: controller.selectedButton,
-                              text: "Outlet",
-                            )),
-                        // Obx(() => OptionWidget(
-                        //       index: 2,
-                        //       press: (v) {
-                        //         controller.selectedButton = v;
-                        //       },
-                        //       selectedButton: controller.selectedButton,
-                        //       text: "Customer",
-                        //     )),
-                        // Obx(() => SizedBox(
-                        //       width: Get.width * 0.7,
-                        //       child: InputDecorator(
-                        //         decoration: const InputDecoration()
-                        //             .applyDefaults(
-                        //                 Theme.of(context).inputDecorationTheme),
-                        //         child: DropdownButtonHideUnderline(
-                        //             child: DropdownButton<String>(
-                        //           iconEnabledColor: AppColors.blueDark,
-                        //           style: Theme.of(context).textTheme.bodySmall,
-                        //           isExpanded: true,
-                        //           items: controller.listOfUser
-                        //               .map((String dropDownStringItem) {
-                        //             return DropdownMenuItem<String>(
-                        //               value: dropDownStringItem,
-                        //               child: SizedBox(
-                        //                 width: Get.width * 0.6,
-                        //                 child: Text(
-                        //                   dropDownStringItem.toString(),
-                        //                   overflow: TextOverflow.ellipsis,
-                        //                 ),
-                        //               ),
-                        //             );
-                        //           }).toList(),
-                        //           onChanged: (String? val) {
-                        //             controller.inputUser = val!;
-                        //           },
-                        //           value: controller.inputUser,
-                        //           isDense: true,
-                        //         )),
-                        //       ),
-                        //     )),
+                        Obx(
+                          () => SizedBox(
+                            width: Get.width * 0.7,
+                            child: InputDecorator(
+                              decoration: const InputDecoration().applyDefaults(
+                                Theme.of(context).inputDecorationTheme,
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  iconEnabledColor: AppColors.blueDark,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                  isExpanded: true,
+                                  items: controller.listOfUser.map((
+                                    String dropDownStringItem,
+                                  ) {
+                                    return DropdownMenuItem<String>(
+                                      value: dropDownStringItem,
+                                      child: SizedBox(
+                                        width: Get.width * 0.6,
+                                        child: Text(
+                                          dropDownStringItem.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? val) {
+                                    controller.inputUser = val!;
+                                  },
+                                  value: controller.inputUser,
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        // plant
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Obx(
+                          () => SizedBox(
+                            width: Get.width * 0.7,
+                            child: InputDecorator(
+                              decoration: const InputDecoration().applyDefaults(
+                                Theme.of(context).inputDecorationTheme,
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton<String>(
+                                  iconEnabledColor: AppColors.blueDark,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                  isExpanded: true,
+                                  items: controller.plantListString.map((
+                                    String dropDownStringItem,
+                                  ) {
+                                    return DropdownMenuItem<String>(
+                                      value: dropDownStringItem,
+                                      child: SizedBox(
+                                        width: Get.width * 0.6,
+                                        child: Text(
+                                          dropDownStringItem.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? val) {
+                                    controller.inputPlant = val!;
+                                  },
+                                  value: controller.inputPlant,
+                                  isDense: true,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
 
                         SizedBox(
                           height: 10.h,
@@ -194,7 +212,7 @@ class LoginView extends GetView<LoginController> {
                   onPressed: () {
                     // Get.toNamed(Routes.OTP, arguments: ["O", "9711784343"]);
                     if (controller.check) {
-                      controller.login();
+                      controller.loginApi();
                     }
                   },
                   title: "Login",

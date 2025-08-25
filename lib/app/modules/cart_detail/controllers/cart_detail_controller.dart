@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:get/get.dart';
+import 'package:maklifee_com/app/utils/constants.dart';
 
 import '../../../data/models/OrderDetailModel.dart';
 import '../../home/controllers/home_controller.dart';
@@ -21,7 +22,7 @@ class CartDetailController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    orderId = Get.arguments;
+    orderId = Get.arguments[0];
     await getorder();
   }
 
@@ -38,8 +39,7 @@ class CartDetailController extends GetxController {
   Future<void> getorder() async {
     try {
       var res = await http.get(
-        Uri.parse(
-            "http://Payment.maklife.in:98/api/FranchiseeProductsInOrder?OrderId=${Get.arguments}"),
+        Uri.parse("$baseUrl/$franchiseeProductsInOrder=${Get.arguments[0]}"),
       );
       print(jsonDecode(res.body));
       if (res.statusCode == 200) {

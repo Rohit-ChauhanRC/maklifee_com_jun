@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:maklifee_com/app/utils/constants.dart';
 import 'package:maklifee_com/app/utils/utils.dart';
 
 import '../../../data/models/ProductDescriptionModel.dart';
@@ -64,9 +65,7 @@ class OrderController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
-    await fetchCatId().then((value) async {
-      if (id.isNotEmpty) await getProductApi(id);
-    });
+    await fetchCatId();
 
     await getUnconfirmOrder();
   }
@@ -85,15 +84,22 @@ class OrderController extends GetxController {
 
   Future<void> fetchCatId() async {
     try {
+      // "$baseUrl/$login"
       var res = await http.post(
         Uri.parse(
-          "http://Payment.maklife.in:98/api/CategoryId",
+          "$baseUrl/$categoryId",
         ),
-        body: {"Catname": Get.arguments},
+        body: {
+          "Catname": Get.arguments[0],
+          "PlantName": Get.arguments[1],
+        },
       );
       if (res.statusCode == 200) {
         // print(res.body);
         id = jsonDecode(res.body).toString();
+        if (id.isNotEmpty) {
+          await getProductApi(id);
+        }
         // await getProductApi(res.body);
       }
       // circularProgress = true;
@@ -106,7 +112,7 @@ class OrderController extends GetxController {
   Future<void> getProductApi(String id) async {
     try {
       var res = await http.get(
-        Uri.parse("http://Payment.maklife.in:98/api/ProductBh?CatId=$id"),
+        Uri.parse("$baseUrl/$productBh=$id&PlantName=${Get.arguments[1]}"),
       );
       if (res.statusCode == 200) {
         subProductModel.assignAll(subProductModelFromMap(res.body));
@@ -121,7 +127,7 @@ class OrderController extends GetxController {
     try {
       var res = await http.get(
         Uri.parse(
-            "http://Payment.maklife.in:98/api/ProductDescription?ProductCode=$id"),
+            "$baseUrl/$productDescription=$id&PlantName=${Get.arguments[2]}"),
       );
       if (res.statusCode == 200) {
         subProductDesc.assignAll(productDescriptionModelFromMap(res.body));
@@ -135,11 +141,12 @@ class OrderController extends GetxController {
   Future<void> addItem() async {
     try {
       var res = await http.post(
-        Uri.parse("http://Payment.maklife.in:98/api/FranchiseeOrder"),
+        Uri.parse("$baseUrl/$franchiseeOrder"),
         body: {
           "ProductCode": productModel.productCode,
           "Quantity": quantity,
-          "CustomerId": homeController.userId
+          "CustomerId": homeController.userId,
+          "PlantName": Get.arguments[1],
         },
       );
       print(jsonDecode(res.body));
@@ -162,7 +169,7 @@ class OrderController extends GetxController {
     try {
       var res = await http.get(
         Uri.parse(
-            "http://Payment.maklife.in:98/api/DisplayfranchiseeOrderUnconfirm?CustomerId=${homeController.userId}"),
+            "$baseUrl/$displayfranchiseeOrderUnconfirm=${homeController.userId}"),
       );
       print(jsonDecode(res.body));
       if (res.statusCode == 200) {
@@ -178,8 +185,7 @@ class OrderController extends GetxController {
   ) async {
     try {
       var res = await http.post(
-        Uri.parse(
-            "http://Payment.maklife.in:98/api/DeleteFranchiseeOrdersProduct"),
+        Uri.parse("$baseUrl/$deleteFranchiseeOrdersProduct"),
         body: {"ProductId": id, "CustomerId": homeController.userId},
       );
       print(jsonDecode(res.body));
@@ -198,7 +204,7 @@ class OrderController extends GetxController {
   Future<void> confirmOrder() async {
     try {
       var res = await http.post(
-        Uri.parse("http://Payment.maklife.in:98/api/ConfirmFranchiseeOrder"),
+        Uri.parse("$baseUrl/$confirmFranchiseeOrder"),
         body: {"CustomerId": homeController.userId},
       );
       print(jsonDecode(res.body));

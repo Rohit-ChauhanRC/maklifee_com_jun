@@ -73,8 +73,9 @@ class CartView extends GetView<CartController> {
                       itemBuilder: (_, i) {
                         return InkWell(
                           onTap: () {
-                            Get.toNamed(Routes.CART_DETAIL,
-                                arguments: controller.orderList[i].orderId);
+                            Get.toNamed(Routes.CART_DETAIL, arguments: [
+                              controller.orderList[i].orderId,
+                            ]);
                           },
                           child: Container(
                             decoration: BoxDecoration(
