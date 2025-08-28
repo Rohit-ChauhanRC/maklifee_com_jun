@@ -77,6 +77,7 @@ class HomeController extends GetxController {
         print(res.statusCode);
         print(res.body);
         userId = res.body.substring(1, 9);
+        print(userId);
         name = res.body.substring(9);
         userType = Get.arguments[0];
       }

@@ -93,8 +93,10 @@ class LoginController extends GetxController {
       // mobileNumber.substring(start)
       Get.toNamed(Routes.HOME,
           arguments: [inputUser, mobileNumber, inputPlant]);
-    } else {
+    } else if (inputPlant.isNotEmpty) {
       await loginCred();
+    } else {
+      Utils.showDialog("Please select plant!");
     }
   }
 
