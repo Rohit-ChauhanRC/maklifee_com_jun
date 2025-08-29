@@ -5,12 +5,16 @@ import 'package:get/get.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:maklifee_com/app/utils/constants.dart';
+import 'package:maklifee_com/app/utils/storage.dart';
 
 import '../../../routes/app_pages.dart';
 import '../../../utils/utils.dart';
 
 class OtpController extends GetxController {
   //
+
+  final sharedPreferenceService = Get.find<Storage>();
+
   GlobalKey<FormState> loginFormKey = GlobalKey();
 
   final RxBool _circularProgress = true.obs;
@@ -89,6 +93,12 @@ class OtpController extends GetxController {
       if (res.statusCode == 200) {
         if (jsonDecode(res.body) == "Success") {
           // await fetchUserData();
+
+          sharedPreferenceService.setString(loginKey, Get.arguments[2]);
+          sharedPreferenceService.setString(userTypeKey, Get.arguments[0]);
+          sharedPreferenceService.setString(
+              mobileNumberKey, Get.arguments[1].trim());
+
           Get.offNamed(Routes.HOME, arguments: [
             Get.arguments[0],
             Get.arguments[1].trim(),
@@ -121,6 +131,11 @@ class OtpController extends GetxController {
       final a = jsonDecode(res.body);
       if (res.statusCode == 200) {
       } else if (res.statusCode == 200 && json.decode(res.body) == "Login") {
+        sharedPreferenceService.setString(loginKey, Get.arguments[2]);
+        sharedPreferenceService.setString(userTypeKey, Get.arguments[0]);
+        sharedPreferenceService.setString(
+            mobileNumberKey, Get.arguments[1].trim());
+
         Get.offNamed(Routes.HOME, arguments: [
           Get.arguments[0] == "O" ? "Outlet" : "Franchiee",
           Get.arguments[1].trim(),

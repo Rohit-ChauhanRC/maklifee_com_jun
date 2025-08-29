@@ -6,11 +6,15 @@ import 'package:http/http.dart' as http;
 import 'package:maklifee_com/app/data/models/plant_list_model.dart';
 import 'package:maklifee_com/app/routes/app_pages.dart';
 import 'package:maklifee_com/app/utils/constants.dart';
+import 'package:maklifee_com/app/utils/storage.dart';
 
 import '../../../utils/utils.dart';
 
 class LoginController extends GetxController {
   //
+
+  final sharedPreferenceService = Get.find<Storage>();
+
   GlobalKey<FormState> loginFormKey = GlobalKey();
 
   final RxBool _circularProgress = true.obs;
@@ -150,6 +154,11 @@ class LoginController extends GetxController {
       );
       if (res.statusCode == 200 &&
           json.decode(res.body) != "No Record Found ?") {
+        sharedPreferenceService.setString(loginKey, inputPlant);
+        sharedPreferenceService.setString(
+            userTypeKey, inputUser == "Outlet" ? "O" : "F");
+        sharedPreferenceService.setString(mobileNumberKey, mobileNumber.trim());
+
         Get.offNamed(Routes.HOME,
             arguments: [inputUser, mobileNumber, inputPlant]);
       } else {

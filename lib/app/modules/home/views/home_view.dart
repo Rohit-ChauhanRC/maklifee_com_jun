@@ -15,7 +15,11 @@ class HomeView extends GetView<HomeController> {
     return Scaffold(
       appBar: AppBar(
           title: Obx(() => Text(
-                controller.userType ?? "User",
+                controller.userType == "F"
+                    ? "Franchise"
+                    : controller.userType == "O"
+                        ? "Outlet"
+                        : controller.userType,
                 style: Theme.of(context).textTheme.bodyMedium,
               )),
           automaticallyImplyLeading: false),

@@ -17,3 +17,7 @@ const String oTPValidation = "OTPValidation";
 const String categoryBhatinda = "CategoryBhatinda";
 const String franchiseeProductsInOrder = "FranchiseeProductsInOrder?OrderId";
 const String franchiseeorderConfirm = "FranchiseeorderConfirm?CustomerId";
+
+const String userTypeKey = "UserTypeKey";
+const String loginKey = "LoginKey";
+const String mobileNumberKey = "MobileNumberKey";

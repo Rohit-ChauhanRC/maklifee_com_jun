@@ -6,13 +6,24 @@ import 'package:get_storage/get_storage.dart';
 
 import 'app/routes/app_pages.dart';
 import 'app/utils/themes/app_theme.dart';
+import 'get_di.dart' as di;
 
 void main() async {
   await GetStorage.init();
-  final box = GetStorage();
+
+  await di.init();
 
   runApp(
-    ScreenUtilInit(
+    const MyApp(),
+  );
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ScreenUtilInit(
         designSize: const Size(360, 690),
         minTextAdapt: true,
         splitScreenMode: true,
@@ -24,6 +35,6 @@ void main() async {
             theme: AppTheme.theme,
             debugShowCheckedModeBanner: false,
           );
-        }),
-  );
+        });
+  }
 }
