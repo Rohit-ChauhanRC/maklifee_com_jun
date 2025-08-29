@@ -15,7 +15,11 @@ class CartDetailView extends GetView<CartDetailController> {
     return Scaffold(
       appBar: AppBar(
         title: Obx(() => Text(
-              controller.homeController.userType ?? "User",
+              controller.homeController.userType == "F"
+                  ? "Franchise"
+                  : controller.homeController.userType == "O"
+                      ? "Outlet"
+                      : controller.homeController.userType,
               style: Theme.of(context).textTheme.bodyMedium,
             )),
       ),

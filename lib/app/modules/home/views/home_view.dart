@@ -47,7 +47,7 @@ class HomeView extends GetView<HomeController> {
                   onTap: () {
                     Get.toNamed(
                       Routes.CART,
-                      arguments: Get.arguments[2],
+                      arguments: controller.inputPlant,
                     );
                   },
                   child: const Row(
@@ -77,7 +77,7 @@ class HomeView extends GetView<HomeController> {
                           onTap: () {
                             Get.toNamed(Routes.ORDER, arguments: [
                               controller.p1[i]["CategoryName"].toString(),
-                              Get.arguments[2],
+                              controller.inputPlant,
                             ]);
                           },
                           child: Container(
